@@ -26,26 +26,28 @@ export function Features({ lang }: { lang: Lang }) {
   };
 
   return (
-    <section className="mx-auto mt-8 grid max-w-page gap-8 px-8 lg:mt-section lg:grid-cols-2">
+    <section className="mx-auto mt-8 grid max-w-page gap-2 px-2 md:grid-cols-2 lg:mt-section lg:px-0">
       {features.map((feature) => (
         <article
           key={feature.id}
           id={feature.id}
-          className="flex flex-col gap-4 sm:flex-row sm:items-center"
+          className="flex items-center gap-2 border border-ink-muted p-2 md:min-h-84"
         >
-          <div className="relative aspect-picture w-full shrink-0 overflow-hidden rounded-card sm:w-2/5">
+          <div className="relative aspect-picture-tall w-3/7 shrink-0 overflow-hidden rounded-card lg:aspect-picture lg:w-1/2">
             <Image
               src={feature.image}
               alt=""
               fill
-              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 100vw"
+              sizes="(min-width: 1024px) 25vw, 20vw"
               className="object-cover"
             />
             {feature.tint && <div className="absolute inset-0 bg-canvas/30" />}
           </div>
-          <div className="flex flex-col items-start gap-4">
+          <div className="flex flex-1 flex-col items-center gap-3 lg:gap-4">
             <h2 className="font-heading text-heading">{text[feature.id].title}</h2>
-            <p className="font-body text-lead">{text[feature.id].text}</p>
+            <p className="self-stretch px-2 font-body text-body lg:text-lead">
+              {text[feature.id].text}
+            </p>
             <ArrowLink
               href={path(lang, `#${feature.id}`)}
               label={text[feature.id].title}

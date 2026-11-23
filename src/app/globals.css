@@ -75,9 +75,16 @@
   --container-page: 1440px; /* max-w-page */
   --spacing-section: 96px; /* mt-section, py-section: між великими секціями */
 
+  /* Відступи тексту в hero на десктопі (з макета Figma 1440 px): заголовок і абзац з кнопками */
+  --spacing-hero-title: 109px; /* ml-hero-title */
+  --spacing-hero-text: 204px; /* ml-hero-text */
+
   /* Пропорції картинок */
-  --aspect-cover: 5 / 4; /* обкладинка картки застосунку */
-  --aspect-picture: 336 / 232; /* картинка у блоках «Дизайн» і «Блог» */
+  --aspect-cover: 5 / 4; /* обкладинка картки застосунку, десктоп */
+  --aspect-cover-tablet: 244 / 280; /* обкладинка картки, планшет (три в ряд) */
+  --aspect-cover-mobile: 375 / 344; /* обкладинка картки, мобільна */
+  --aspect-picture: 336 / 232; /* картинка у блоках «Дизайн» і «Блог», десктоп */
+  --aspect-picture-tall: 157 / 233; /* та сама картинка на планшеті й мобільній (вертикальна) */
   --aspect-hero-desktop: 2000 / 779;
   --aspect-hero-tablet: 1536 / 784;
   --aspect-hero-mobile: 780 / 1234;

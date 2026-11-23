@@ -39,7 +39,8 @@ const variants: Record<ButtonVariant, string> = {
 
 const sizes: Record<ButtonSize, string> = {
   md: "px-4 py-2 text-body",
-  lg: "px-4 py-2 text-lead",
+  // Великий: 16 px на планшеті й мобільній, 24 px з 1024 px (як у макетах Figma)
+  lg: "px-4 py-2 text-body lg:text-lead",
 };
 
 /** Класи кнопки: один вигляд для `Button` і `ButtonLink`. */

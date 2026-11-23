@@ -3,7 +3,6 @@
 import { useEffect, useId, useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Button } from "./Button";
 
 export interface NavigationItem {
   label: string;
@@ -17,15 +16,20 @@ export interface NavigationProps {
   activeHref?: string;
   /** Підпис навігації для екранних читачів. */
   label?: string;
-  /** Підпис кнопки меню на вузькому екрані (за замовчуванням «Меню»). */
+  /** Підпис кнопки-бургера, коли меню закрите (за замовчуванням «Меню»). */
   menuLabel?: string;
-  /** Підпис кнопки меню, коли воно відкрите (за замовчуванням «Закрити»). */
+  /** Підпис кнопки-бургера, коли меню відкрите (за замовчуванням «Закрити»). */
   closeLabel?: string;
   /**
-   * Додаткові елементи після пунктів: перемикач мови, кнопка «Написати мені».
-   * На широкому екрані стоять у рядок, на вузькому лежать у відкритому меню.
+   * Елементи, які видно завжди, також на вузькому екрані поруч із бургером
+   * (перемикач мови, перемикач теми).
    */
-  children?: ReactNode;
+  bar?: ReactNode;
+  /**
+   * Головна дія («Написати мені»). На широкому екрані стоїть у рядок після `bar`,
+   * на вузькому лежить усередині відкритого меню.
+   */
+  action?: ReactNode;
 }
 
 const linkBase =
@@ -33,8 +37,8 @@ const linkBase =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink lg:text-lead";
 
 /**
- * Меню сайту. На широкому екрані пункти стоять у рядок. На вузькому (до 1024 px) меню згортається
- * в кнопку «Меню»; відкрите меню лежить поверх контенту й закривається клавішею Escape.
+ * Меню сайту. На широкому екрані (від 1024 px) пункти стоять у рядок. На вузькому меню згортається
+ * в іконку-бургер; відкрите меню лежить поверх контенту й закривається клавішею Escape.
  */
 export function Navigation({
   items,
@@ -42,7 +46,8 @@ export function Navigation({
   label = "Головне меню",
   menuLabel = "Меню",
   closeLabel = "Закрити",
-  children,
+  bar,
+  action,
 }: NavigationProps) {
   const id = useId();
   const menuId = `${id}-menu`;
@@ -62,18 +67,7 @@ export function Navigation({
   }, [open, toggleId]);
 
   return (
-    <nav aria-label={label} className="relative">
-      <div className="lg:hidden">
-        <Button
-          id={toggleId}
-          variant="secondary"
-          aria-expanded={open}
-          aria-controls={menuId}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? closeLabel : menuLabel}
-        </Button>
-      </div>
+    <nav aria-label={label} className="relative flex items-center gap-3 lg:gap-6">
       <ul
         id={menuId}
         className={
@@ -102,12 +96,37 @@ export function Navigation({
             </li>
           );
         })}
-        {children && (
-          <li className="flex flex-wrap items-center gap-3 px-3 lg:flex-nowrap lg:px-0">
-            {children}
-          </li>
-        )}
+        {action && <li className="lg:hidden">{action}</li>}
       </ul>
+
+      {bar && <div className="flex items-center gap-3">{bar}</div>}
+      {action && <div className="max-lg:hidden">{action}</div>}
+
+      <button
+        id={toggleId}
+        type="button"
+        aria-expanded={open}
+        aria-controls={menuId}
+        aria-label={open ? closeLabel : menuLabel}
+        onClick={() => setOpen((value) => !value)}
+        className="inline-flex size-11 cursor-pointer items-center justify-center rounded-control text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink lg:hidden"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="size-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        >
+          {open ? (
+            <path d="M5 5l14 14M19 5L5 19" />
+          ) : (
+            <path d="M3 7h18M3 12h18M3 17h18" />
+          )}
+        </svg>
+      </button>
     </nav>
   );
 }

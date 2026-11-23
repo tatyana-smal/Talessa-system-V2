@@ -37,18 +37,33 @@ export function Header({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <header className="relative z-10 mx-auto flex w-full max-w-page items-center justify-between gap-4 px-8 py-2">
-      <Link href={path(lang)} aria-label="Talessa" className="w-1/3 lg:w-1/6">
+    // Шапка 67 px, як у Figma; логотип більший за неї й виступає на hero
+    <header className="relative z-20 mx-auto flex w-full max-w-page items-center justify-end px-4 py-2 md:px-8">
+      <Link
+        href={path(lang)}
+        aria-label="Talessa"
+        className="absolute left-2 top-2 w-36 md:left-0 md:-top-2 md:w-45 lg:left-8 lg:top-0 lg:w-58"
+      >
         <Image src={logo} alt="Talessa" priority className="h-auto w-full" />
       </Link>
-      <Navigation items={items} label={t.menu} menuLabel={t.menu} closeLabel={t.close}>
-        <LanguageSwitcher lang={lang} label={t.language} />
-        <ThemeSwitch label={t.theme} />
-        <ButtonLink href={path(lang, "/contact")} className="font-normal">
-          {t.contact}
-          <SendIcon />
-        </ButtonLink>
-      </Navigation>
+      <Navigation
+        items={items}
+        label={t.menu}
+        menuLabel={t.menu}
+        closeLabel={t.close}
+        bar={
+          <>
+            <LanguageSwitcher lang={lang} label={t.language} />
+            <ThemeSwitch label={t.theme} />
+          </>
+        }
+        action={
+          <ButtonLink href={path(lang, "/contact")} size="lg" className="font-normal">
+            {t.contact}
+            <SendIcon />
+          </ButtonLink>
+        }
+      />
     </header>
   );
 }

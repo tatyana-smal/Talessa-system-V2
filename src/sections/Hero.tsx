@@ -11,7 +11,7 @@ import type { Lang } from "@/i18n/config";
 export function Hero({ lang }: { lang: Lang }) {
   const t = home[lang];
 
-  // Одна картина на розмір екрана (фон + фото + плавний перехід під текст).
+  // Одна картина на розмір екрана (фон + фото + плавний перехід під текст), текст лежить поверх неї.
   const common = { alt: "", sizes: "100vw" };
   const desktop = getImageProps({ ...common, src: heroDesktop }).props.srcSet;
   const tablet = getImageProps({ ...common, src: heroTablet }).props.srcSet;
@@ -24,23 +24,21 @@ export function Hero({ lang }: { lang: Lang }) {
   return (
     <section
       id="top"
-      className="relative flex flex-col md:block md:aspect-hero-tablet lg:aspect-hero-desktop"
+      className="relative mt-2 aspect-hero-mobile md:aspect-hero-tablet lg:aspect-hero-desktop"
     >
-      {/* Вузький екран: текст зверху, картина під ним. Від 768 px текст лежить поверх картини. */}
-      <div className="relative order-2 aspect-cover overflow-hidden md:absolute md:inset-0 md:order-none md:aspect-auto">
-        <picture>
-          <source media="(min-width: 1024px)" srcSet={desktop} />
-          <source media="(min-width: 768px)" srcSet={tablet} />
-          <img
-            {...img}
-            srcSet={mobile}
-            alt=""
-            className="absolute inset-0 size-full object-cover object-bottom md:object-center"
-          />
-        </picture>
-      </div>
-      <div className="relative order-1 mx-auto flex w-full max-w-page flex-col items-start gap-3 px-3 py-3 sm:px-8 sm:py-8 md:order-none lg:mx-0 lg:w-3/5">
-        <h1 className="font-heading text-display lg:w-5/6">
+      <picture>
+        <source media="(min-width: 1024px)" srcSet={desktop} />
+        <source media="(min-width: 768px)" srcSet={tablet} />
+        <img
+          {...img}
+          srcSet={mobile}
+          alt=""
+          className="absolute inset-0 size-full object-cover"
+        />
+      </picture>
+      {/* Відступи тексту за макетами Figma: мобільна 16, планшет 32, десктоп 109 і 204 px */}
+      <div className="relative flex flex-col items-start pb-2 pl-4 pr-8 pt-3 md:pl-8 md:pt-8 lg:pl-0 lg:pr-0 lg:pt-16">
+        <h1 className="font-heading text-display md:w-1/2 lg:ml-hero-title lg:w-1/2">
           {t.heroTitle.map((line, i) => (
             <Fragment key={line}>
               {i > 0 && <br />}
@@ -48,8 +46,10 @@ export function Hero({ lang }: { lang: Lang }) {
             </Fragment>
           ))}
         </h1>
-        <p className="font-body text-lead lg:w-3/5">{t.heroText}</p>
-        <div className="flex flex-wrap items-center gap-6">
+        <p className="mt-2 font-body text-lead md:w-1/2 lg:ml-hero-text lg:mt-8 lg:w-5/14">
+          {t.heroText}
+        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-3 lg:ml-hero-text lg:mt-4 lg:gap-8">
           <ButtonLink href={path(lang, "#apps")} size="lg">
             <span className="max-lg:hidden">{t.exploreApps}</span>
             <span className="lg:hidden">{t.exploreAppsShort}</span>

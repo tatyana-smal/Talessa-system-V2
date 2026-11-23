@@ -1,9 +1,24 @@
 import { ButtonLink } from "@/components/ButtonLink";
 
-/** Кругла кнопка зі стрілкою: перехід до розділу. Підпис для екранних читачів — `label`. */
-export function ArrowLink({ href, label }: { href: string; label: string }) {
+/**
+ * Кругла кнопка зі стрілкою: перехід до розділу. Підпис для екранних читачів — `label`.
+ * На мобільній (до 768 px) за макетом лишається лише стрілка без темної заливки.
+ */
+export function ArrowLink({
+  href,
+  label,
+  className = "",
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
   return (
-    <ButtonLink href={href} aria-label={label} className="self-start px-8">
+    <ButtonLink
+      href={href}
+      aria-label={label}
+      className={`px-8 max-md:border-transparent max-md:bg-transparent max-md:px-0 max-md:text-ink max-md:shadow-none max-md:hover:bg-transparent ${className}`.trim()}
+    >
       <svg
         aria-hidden="true"
         viewBox="0 0 32 24"

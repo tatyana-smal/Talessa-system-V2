@@ -30,7 +30,7 @@
 
 - `Button` (`src/components/Button.tsx`): `variant` primary/secondary, `size` md/lg, `disabled` (через `aria-disabled`, кнопка лишається у фокусі) і `disabledReason` (пояснення під кнопкою).
 - `FormField` (`src/components/FormField.tsx`): текстове поле з підписом над ним; `label`, `error`, `errorText`, `disabled`, значення через `defaultValue`/`value`.
-- `Navigation` (`src/components/Navigation.tsx`): меню сайту; `items`, `activeHref`; до 1024 px згортається в кнопку «Меню», відкрите лежить поверх контенту, закривається Escape.
+- `Navigation` (`src/components/Navigation.tsx`): меню сайту; `items`, `activeHref`, `bar` (завжди видно: перемикачі мови й теми), `action` (кнопка «Написати мені»); до 1024 px згортається в іконку-бургер, відкрите меню лежить поверх контенту, закривається Escape.
 
 - `ButtonLink` (`src/components/ButtonLink.tsx`): посилання у вигляді кнопки, ті самі `variant` і `size`.
 
