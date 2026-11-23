@@ -29,6 +29,7 @@
 Лежать у `src/components/`, історія й docs у `<Компонент>.stories.tsx` поруч. Одна історія на компонент з Controls.
 
 - `Button` (`src/components/Button.tsx`): `variant` primary/secondary, `size` md/lg, `disabled` (через `aria-disabled`, кнопка лишається у фокусі) і `disabledReason` (пояснення під кнопкою).
+- `FormField` (`src/components/FormField.tsx`): текстове поле з підписом над ним; `label`, `error`, `errorText`, `disabled`, значення через `defaultValue`/`value`.
 
 Після додавання нового файлу з компонентом перезапусти Storybook (`npm run storybook`), інакше його класи Tailwind можуть не підхопитись.
 
