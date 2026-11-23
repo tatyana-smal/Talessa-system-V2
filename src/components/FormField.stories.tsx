@@ -17,10 +17,12 @@ const meta = {
 - \`error\`: стан помилки, \`false\` за замовчуванням.
 - \`errorText\`: текст помилки під полем. Показується з іконкою, коли \`error\` увімкнено.
 - \`disabled\`: вимкнене поле, \`false\` за замовчуванням.
+- \`multiline\`: багаторядкове поле для довгого тексту (\`rows\` — висота в рядках, за замовчуванням 7).
+- \`options\`: список \`{ value, label }\`; тоді поле стає випадним списком.
 - \`type\` (за замовчуванням \`text\`), \`name\`, \`placeholder\`, \`onChange\` та інші атрибути \`<input>\` передаються далі.
 
 ### Варіанти і стани
-- default: межа \`ink-muted\` (6,21:1 на \`canvas\`), заливка \`canvas\`, підпис і текст \`ink\`, підказка в полі \`ink-muted\`.
+- default (зі старого проєкту): межа 1 px \`ink-muted\` (6,21:1 на \`canvas\`), заливка \`canvas\`, відступ усередині 16 px, підпис і текст \`ink\`, підказка в полі \`ink-muted\`.
 - hover: межа \`ink\`.
 - focus з клавіатури чи мишею: контур 2 px \`ink\` із відступом (12,69:1 на \`canvas\`).
 - заповнене: текст \`ink\`, межа та сама, що в default.
@@ -50,8 +52,10 @@ import { FormField } from "@/components/FormField";
     error: { control: "boolean" },
     errorText: { control: "text" },
     disabled: { control: "boolean" },
+    multiline: { control: "boolean" },
   },
   args: {
+    multiline: false,
     label: "Імʼя",
     placeholder: "Як до вас звертатись",
     defaultValue: "",

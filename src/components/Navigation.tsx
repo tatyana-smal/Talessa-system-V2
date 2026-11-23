@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { Button } from "./Button";
 
@@ -16,6 +17,15 @@ export interface NavigationProps {
   activeHref?: string;
   /** Підпис навігації для екранних читачів. */
   label?: string;
+  /** Підпис кнопки меню на вузькому екрані (за замовчуванням «Меню»). */
+  menuLabel?: string;
+  /** Підпис кнопки меню, коли воно відкрите (за замовчуванням «Закрити»). */
+  closeLabel?: string;
+  /**
+   * Додаткові елементи після пунктів: перемикач мови, кнопка «Написати мені».
+   * На широкому екрані стоять у рядок, на вузькому лежать у відкритому меню.
+   */
+  children?: ReactNode;
 }
 
 const linkBase =
@@ -26,7 +36,14 @@ const linkBase =
  * Меню сайту. На широкому екрані пункти стоять у рядок. На вузькому (до 1024 px) меню згортається
  * в кнопку «Меню»; відкрите меню лежить поверх контенту й закривається клавішею Escape.
  */
-export function Navigation({ items, activeHref, label = "Головне меню" }: NavigationProps) {
+export function Navigation({
+  items,
+  activeHref,
+  label = "Головне меню",
+  menuLabel = "Меню",
+  closeLabel = "Закрити",
+  children,
+}: NavigationProps) {
   const id = useId();
   const menuId = `${id}-menu`;
   const toggleId = `${id}-toggle`;
@@ -54,7 +71,7 @@ export function Navigation({ items, activeHref, label = "Головне меню
           aria-controls={menuId}
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? "Закрити" : "Меню"}
+          {open ? closeLabel : menuLabel}
         </Button>
       </div>
       <ul
@@ -85,6 +102,11 @@ export function Navigation({ items, activeHref, label = "Головне меню
             </li>
           );
         })}
+        {children && (
+          <li className="flex flex-wrap items-center gap-3 px-3 lg:flex-nowrap lg:px-0">
+            {children}
+          </li>
+        )}
       </ul>
     </nav>
   );

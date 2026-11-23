@@ -3,32 +3,28 @@ import type { StaticImageData } from "next/image";
 import { ArrowLink } from "./ArrowLink";
 import designImg from "@/assets/img/design.png";
 import blogImg from "@/assets/img/blog.png";
+import { home } from "@/i18n/strings";
+import { path } from "@/i18n/config";
+import type { Lang } from "@/i18n/config";
 
 interface Feature {
-  id: string;
-  title: string;
-  text: string;
+  id: "design" | "blog";
   image: StaticImageData;
   tint?: boolean;
 }
 
 const features: Feature[] = [
-  {
-    id: "design",
-    title: "Дизайн",
-    text: "Розробка, дизайн, програмування цифрових продуктів та підтримка їх на різних етапах",
-    image: designImg,
-  },
-  {
-    id: "blog",
-    title: "Блог",
-    text: "Про творчість, в’язання, навчання, дизайн, рослини і життя у балансі (наскільки це можливо)))",
-    image: blogImg,
-    tint: true,
-  },
+  { id: "design", image: designImg },
+  { id: "blog", image: blogImg, tint: true },
 ];
 
-export function Features() {
+export function Features({ lang }: { lang: Lang }) {
+  const t = home[lang];
+  const text = {
+    design: { title: t.designTitle, text: t.designText },
+    blog: { title: t.blogTitle, text: t.blogText },
+  };
+
   return (
     <section className="mx-auto mt-8 grid max-w-page gap-8 px-8 lg:mt-section lg:grid-cols-2">
       {features.map((feature) => (
@@ -48,9 +44,12 @@ export function Features() {
             {feature.tint && <div className="absolute inset-0 bg-canvas/30" />}
           </div>
           <div className="flex flex-col items-start gap-4">
-            <h2 className="font-heading text-heading">{feature.title}</h2>
-            <p className="font-body text-lead">{feature.text}</p>
-            <ArrowLink href={`/#${feature.id}`} label={feature.title} />
+            <h2 className="font-heading text-heading">{text[feature.id].title}</h2>
+            <p className="font-body text-lead">{text[feature.id].text}</p>
+            <ArrowLink
+              href={path(lang, `#${feature.id}`)}
+              label={text[feature.id].title}
+            />
           </div>
         </article>
       ))}

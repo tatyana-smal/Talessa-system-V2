@@ -18,10 +18,10 @@ const meta = {
 - \`children\`: підпис або підпис з іконкою. Для кнопки лише з іконкою додай \`aria-label\`.
 
 ### Варіанти і стани
-Ті самі, що у \`Button\`: \`primary\` на \`accent\` (підпис \`canvas\`, 6,02:1), \`secondary\` з межею \`ink-muted\`; hover змінює заливку (\`ink\` або \`surface\`); фокус з клавіатури — контур 2 px \`ink\`. Вимкненого стану в посилання немає: недоступна дія має бути \`Button\` з \`disabled\`.
+Ті самі, що у \`Button\`: \`primary\` — заливка \`ink\` з тінню, підпис \`canvas\` жирним (12,69:1); \`secondary\` — межа \`ink\` і тінь; hover тимчасово змінює заливку (\`ink-muted\` або \`surface\`); фокус з клавіатури — контур 2 px \`ink\`. Вимкненого стану в посилання немає: недоступна дія має бути \`Button\` з \`disabled\`.
 
 ### Токени
-\`accent\`, \`canvas\`, \`ink\`, \`ink-muted\`, \`surface\`, \`rounded-control\`, \`text-body\`, \`text-lead\`, \`font-body\`, відступи 8, 16, 24 px.
+\`canvas\`, \`ink\`, \`ink-muted\`, \`surface\`, \`rounded-control\`, \`shadow-button-primary\`, \`shadow-button-secondary\`, \`text-body\`, \`text-lead\`, \`font-body\`, відступи 8 і 16 px.
 
 ### Коли використовувати
 Коли дія — це перехід: на сторінку застосунку, до розділу, на форму. Коли дія відбувається на цій сторінці (надіслати, зберегти), бери \`Button\`.

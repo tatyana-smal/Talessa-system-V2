@@ -1,10 +1,16 @@
+import { Fragment } from "react";
 import { getImageProps } from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import heroDesktop from "@/assets/img/hero-full.webp";
 import heroTablet from "@/assets/img/hero-full-tablet.webp";
 import heroMobile from "@/assets/img/hero-full-mobile.webp";
+import { home } from "@/i18n/strings";
+import { path } from "@/i18n/config";
+import type { Lang } from "@/i18n/config";
 
-export function Hero() {
+export function Hero({ lang }: { lang: Lang }) {
+  const t = home[lang];
+
   // Одна картина на розмір екрана (фон + фото + плавний перехід під текст).
   const common = { alt: "", sizes: "100vw" };
   const desktop = getImageProps({ ...common, src: heroDesktop }).props.srcSet;
@@ -35,20 +41,21 @@ export function Hero() {
       </div>
       <div className="relative order-1 mx-auto flex w-full max-w-page flex-col items-start gap-3 px-3 py-3 sm:px-8 sm:py-8 md:order-none lg:mx-0 lg:w-3/5">
         <h1 className="font-heading text-display lg:w-5/6">
-          Застосунки,
-          <br />
-          що турбуються про те, що для нас важливе
+          {t.heroTitle.map((line, i) => (
+            <Fragment key={line}>
+              {i > 0 && <br />}
+              {line}
+            </Fragment>
+          ))}
         </h1>
-        <p className="font-body text-lead lg:w-3/5">
-          Люблю перетворювати ідеї на щось корисне і цікаве: створюю власні застосунки,
-          проєктую інтерфейси та ділюся тим, чим живу, що мене захоплює і надихає
-        </p>
+        <p className="font-body text-lead lg:w-3/5">{t.heroText}</p>
         <div className="flex flex-wrap items-center gap-6">
-          <ButtonLink href="/#apps" size="lg">
-            Переглянути застосунки
+          <ButtonLink href={path(lang, "#apps")} size="lg">
+            <span className="max-lg:hidden">{t.exploreApps}</span>
+            <span className="lg:hidden">{t.exploreAppsShort}</span>
           </ButtonLink>
-          <ButtonLink href="/#about" variant="secondary" size="lg">
-            Про мене
+          <ButtonLink href={path(lang, "#about")} variant="secondary" size="lg">
+            {t.about}
           </ButtonLink>
         </div>
       </div>

@@ -1,0 +1,279 @@
+/* "My yarn" case page (Figma frame is 1920px wide, sizes scale down with clamp) */
+.yarn {
+  /* Сторінки застосунків беруть ті самі ролі кольорів, що й сайт (токени з @theme). */
+  --canvas: var(--color-canvas);
+  --surface: var(--color-surface);
+  --text: var(--color-ink);
+  --text-muted: var(--color-ink-muted);
+  --accent: var(--color-accent);
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  /* Лише ці значення належать самим сторінкам застосунків і не є токенами сайту */
+  --case-gold: #d29852; /* золота смужка блоків «Вже реалізовано / Планується» */
+  --fs-intro: 48px; /* «Вступ»: Inter Bold Italic */
+  --lh-intro: 1.2;
+  --ratio-device: 259 / 525.57; /* мокап телефона */
+  --space-2: 12px;
+  --space-4: 24px;
+  flex: 1;
+  overflow-x: clip;
+  background: var(--canvas);
+  color: var(--text);
+}
+/* Page column. At the 1920px artboard the side margins are 320px (content 1280px);
+   on narrower screens the margins shrink linearly down to 16px at 600px and below.
+   Everything inside is sized in cqw (a share of this column's width), so text and
+   pictures shrink together with it. */
+.yarn-wrap {
+  container-type: inline-size;
+  width: min(calc(100% - 2 * clamp(16px, calc(23.03vw - 122.2px), 320px)), 1280px);
+  margin-inline: auto;
+}
+/* ---- Hero ---- */
+.yarn-hero {
+  position: relative;
+  aspect-ratio: 1920 / 1299;
+  overflow: hidden;
+}
+.yarn-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.yarn-hero__veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(252, 247, 244, 0.2);
+}
+.yarn-hero__text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  /* hero text scales with the hero width (no big minimum sizes), so on a phone it shrinks together with the picture */
+  padding: clamp(6px, 3.3cqw, 64px) clamp(8px, 1.7cqw, 32px);
+  text-align: right;
+  /* Figma: Playfair Bold, line height 120%, letter spacing 5%, opsz 12 / wdth 100 */
+  font-family: var(--font-playfair), Georgia, serif;
+  font-variation-settings: 'opsz' 12, 'wdth' 100;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.yarn-hero__text h1 {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(14px, 5cqw, 96px); /* 96px at 1920px */
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+.yarn-hero__text p {
+  max-width: 64.4%; /* 1236 / 1920 */
+  font-size: clamp(8px, 2.5cqw, 48px); /* 48px at 1920px */
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-wrap: balance; /* no lonely word on the last line */
+}
+
+.phone {
+  position: absolute;
+  width: 13.49%; /* 259 / 1920 */
+  aspect-ratio: var(--ratio-device);
+}
+.phone__screen {
+  position: absolute;
+  left: 5.43%;
+  top: 2.47%;
+  width: 89.14%;
+  height: 95.27%;
+  background: var(--canvas);
+  overflow: hidden;
+}
+.phone__content {
+  position: absolute;
+  inset: 3.35% 0 0 0;
+  width: 100%;
+  height: 96.65%;
+  object-fit: contain;
+}
+.phone__bar {
+  position: absolute;
+  inset: 0 0 96.65% 0;
+  background: var(--canvas);
+}
+/* Images ignore "inset" on the far side, so size and position are given explicitly (as shares of the box) */
+.phone__status {
+  position: absolute;
+  left: 76.11%;
+  top: 1.84%;
+  width: 15.61%;
+  height: 1.22%;
+}
+.phone__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.phone__notch {
+  position: absolute;
+  left: 38.45%;
+  top: 2.16%;
+  width: 16.33%;
+  height: 1.96%;
+}
+
+/* ---- Content sections ---- */
+.yarn-section {
+  padding: clamp(24px, 3.3cqw, 64px) clamp(16px, 1.7cqw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.5cqw, 48px);
+}
+.yarn-title {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(22px, 2.5cqw, 48px);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 10px 16px;
+}
+.yarn-quote,
+.yarn-text {
+  font-size: clamp(16px, 2.5cqw, 48px);
+  line-height: normal;
+  padding: 0 clamp(0px, 3.3cqw, 64px);
+}
+/* intro paragraph: 240px indent at full width (the column is 1280px there), shrinking with the column */
+/* "Вступ" token (--fs-intro): 48px Inter Bold Italic at 1920px, scales with the column; used by both case pages */
+.yarn-quote,
+.yarn-text--indent {
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(16px, 2.5cqw, var(--fs-intro));
+  line-height: var(--lh-intro);
+}
+/* intro: 32px further in than the paragraph below it (32px at full width); 64px between the two paragraphs */
+.yarn-text--indent {
+  padding-right: clamp(0px, 3.3cqw, 64px);
+  padding-left: clamp(0px, 5.8cqw, 74px);
+}
+.yarn-quote { padding-left: clamp(0px, 5.8cqw, 74px); }
+.yarn-section--intro { padding-bottom: 0; }
+.yarn-section--after-intro { padding-top: clamp(16px, 5cqw, 64px); }
+.yarn-text b {
+  font-weight: 800;
+}
+
+.yarn-features {
+  display: flex;
+  gap: var(--space-2);
+  padding: clamp(12px, 1.7cqw, 32px);
+  background: var(--canvas);
+  border: 3px solid var(--text-muted);
+}
+.yarn-box {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: clamp(12px, 1.7cqw, 32px) clamp(8px, 0.8cqw, 16px);
+  border: 3px solid var(--text-muted);
+  box-shadow: var(--shadow-box);
+}
+.yarn-box--plan { border-color: var(--accent); }
+.yarn-box__head {
+  padding: clamp(8px, 1.5cqw, 29px) 16px;
+  background: var(--case-gold);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(18px, 2.5cqw, 48px);
+  line-height: normal;
+  color: var(--text);
+}
+.yarn-list {
+  margin: 0;
+  padding-left: clamp(28px, 3.75cqw, 72px);
+  font-size: clamp(16px, 2.5cqw, 48px);
+  line-height: normal;
+}
+.yarn-list li::marker { font-weight: 800; }
+.yarn-list b { font-weight: 800; }
+
+/* ---- End ---- */
+.yarn-end {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 4cqw, 77px) clamp(16px, 6cqw, 120px);
+  overflow: hidden;
+}
+.yarn-end__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+}
+.yarn-end p {
+  position: relative;
+  text-align: center;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-variation-settings: 'opsz' 12, 'wdth' 100;
+  font-weight: 900;
+  font-size: clamp(26px, 6.67cqw, 128px);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* ---- "RISE" health case page: same layout and the same palette as the main pages ---- */
+.yarn-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.health-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.health-img--narrow {
+  width: min(84%, 1200px);
+  margin: 0 auto;
+}
+/* soft warm band behind the screenshots (canvas -> surface) */
+.health-band {
+  padding: clamp(8px, 2cqw, 40px) 0 0;
+  background: linear-gradient(180deg, var(--canvas) 0%, var(--surface) 100%);
+}
+.yarn-hero--health { aspect-ratio: 1920 / 1306; }
+.yarn-hero--health .yarn-hero__veil { background: linear-gradient(180deg, rgba(31, 20, 8, 0.35) 0%, rgba(31, 20, 8, 0) 40%); }
+.yarn-hero__text--center {
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.yarn-hero__text--center h1 {
+  font-size: clamp(12px, 3.6cqw, 70px);
+  letter-spacing: 0.04em;
+}
+.yarn-hero__devices {
+  position: absolute;
+  right: 9%;
+  bottom: 12%;
+  width: 22%;
+  height: auto;
+}
+
+@media (max-width: 800px) {
+  .yarn-features { flex-direction: column; }
+  .yarn-hero__text p { max-width: 100%; }
+}
