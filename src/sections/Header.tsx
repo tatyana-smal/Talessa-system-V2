@@ -1,10 +1,13 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { Navigation } from "@/components/Navigation";
 import { ThemeSwitch } from "@/components/ThemeSwitch";
 import logo from "@/assets/img/logo.png";
+import burger from "@/assets/img/burger.svg";
 import { header } from "@/i18n/strings";
 import { path } from "@/i18n/config";
 import type { Lang } from "@/i18n/config";
@@ -27,43 +30,66 @@ export function SendIcon() {
   );
 }
 
+/** Шапка зі старого проєкту: логотип, меню, перемикачі мови й теми, кнопка «Написати мені», бургер. */
 export function Header({ lang }: { lang: Lang }) {
   const t = header[lang];
-  const items = [
-    { label: t.apps, href: path(lang, "#apps") },
-    { label: t.design, href: path(lang, "#design") },
-    { label: t.blog, href: path(lang, "#blog") },
-    { label: t.about, href: path(lang, "#about") },
+  const links = [
+    { href: path(lang, "#apps"), label: t.apps },
+    { href: path(lang, "#design"), label: t.design },
+    { href: path(lang, "#blog"), label: t.blog },
+    { href: path(lang, "#about"), label: t.about },
   ];
+  const [open, setOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
+
+  // Меню на телефоні закривається натисканням поза ним і клавішею Escape
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (navRef.current?.contains(target) || burgerRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   return (
-    // Шапка 67 px, як у Figma; логотип більший за неї й виступає на hero
-    <header className="relative z-20 mx-auto flex w-full max-w-page items-center justify-end px-4 py-2 md:px-8">
-      <Link
-        href={path(lang)}
-        aria-label="Talessa"
-        className="absolute left-2 top-2 w-36 md:left-0 md:-top-2 md:w-45 lg:left-8 lg:top-0 lg:w-58"
-      >
-        <Image src={logo} alt="Talessa" priority className="h-auto w-full" />
+    <header className="header">
+      <Link href={path(lang)} className="logo">
+        <Image src={logo} alt="Talessa" priority />
       </Link>
-      <Navigation
-        items={items}
-        label={t.menu}
-        menuLabel={t.menu}
-        closeLabel={t.close}
-        bar={
-          <>
-            <LanguageSwitcher lang={lang} label={t.language} />
-            <ThemeSwitch label={t.theme} />
-          </>
-        }
-        action={
-          <ButtonLink href={path(lang, "/contact")} size="lg" className="font-normal">
-            {t.contact}
-            <SendIcon />
-          </ButtonLink>
-        }
-      />
+      <nav ref={navRef} className={`nav ${open ? "nav--open" : ""}`}>
+        {links.map((link) => (
+          <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+            {link.label}
+          </Link>
+        ))}
+        <LanguageSwitcher lang={lang} label={t.language} />
+        <ThemeSwitch label={t.theme} />
+        <ButtonLink href={path(lang, "/contact")} size="lg" className="btn btn--pill nav__cta">
+          {t.contact}
+          <SendIcon />
+        </ButtonLink>
+      </nav>
+      <button
+        ref={burgerRef}
+        type="button"
+        className="burger"
+        aria-label={t.menu}
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <Image src={burger} alt="" width={24} height={24} />
+      </button>
     </header>
   );
 }

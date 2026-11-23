@@ -14,10 +14,23 @@
   --ratio-device: 259 / 525.57; /* мокап телефона */
   --space-2: 12px;
   --space-4: 24px;
-  flex: 1;
+  min-height: 100vh;
   overflow-x: clip;
   background: var(--canvas);
   color: var(--text);
+}
+
+/* On the case pages the hero is an opaque photo (the home hero has a transparent top strip),
+   so the header must be tall enough for the whole logo, otherwise the hero would cover it. */
+.yarn .header,
+.legal .header { min-height: 116px; }
+@media (max-width: 1100px) {
+  .yarn .header,
+  .legal .header { min-height: 83px; }
+}
+@media (max-width: 600px) {
+  .yarn .header,
+  .legal .header { min-height: 79px; }
 }
 /* Page column. At the 1920px artboard the side margins are 320px (content 1280px);
    on narrower screens the margins shrink linearly down to 16px at 600px and below.

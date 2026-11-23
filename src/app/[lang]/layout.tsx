@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "../globals.css";
+import "../../styles/legacy.css";
 import { fontVariables } from "../fonts";
 import { hasLocale, locales } from "@/i18n/config";
 

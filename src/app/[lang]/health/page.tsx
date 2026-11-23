@@ -29,8 +29,8 @@ export default async function HealthPage({ params }: PageProps<"/[lang]/health">
 
   return (
     <>
-      <Header lang={lang} />
       <div className="yarn yarn--health">
+          <Header lang={lang} />
         <div className="yarn-wrap">
           <section className="yarn-hero yarn-hero--health">
             <Image
@@ -97,8 +97,8 @@ export default async function HealthPage({ params }: PageProps<"/[lang]/health">
             </p>
           </section>
         </div>
+        <Footer lang={lang} />
       </div>
-      <Footer lang={lang} />
     </>
   );
 }

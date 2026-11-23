@@ -15,7 +15,7 @@
   --font-body: var(--font-inter), system-ui, sans-serif;
 }
 
-@theme {
+@theme static {
   /* Скидаємо стандартні шкали Tailwind: лишається тільки система */
   --color-*: initial;
   --text-*: initial;

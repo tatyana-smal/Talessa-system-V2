@@ -1,5 +1,4 @@
 import Image from "next/image";
-import type { StaticImageData } from "next/image";
 import { ArrowLink } from "./ArrowLink";
 import designImg from "@/assets/img/design.png";
 import blogImg from "@/assets/img/blog.png";
@@ -7,54 +6,34 @@ import { home } from "@/i18n/strings";
 import { path } from "@/i18n/config";
 import type { Lang } from "@/i18n/config";
 
-interface Feature {
-  id: "design" | "blog";
-  image: StaticImageData;
-  tint?: boolean;
-}
-
-const features: Feature[] = [
-  { id: "design", image: designImg },
-  { id: "blog", image: blogImg, tint: true },
-];
-
+/** Блоки «Дизайн» і «Блог» зі старого проєкту. */
 export function Features({ lang }: { lang: Lang }) {
   const t = home[lang];
-  const text = {
-    design: { title: t.designTitle, text: t.designText },
-    blog: { title: t.blogTitle, text: t.blogText },
-  };
 
   return (
-    <section className="mx-auto mt-8 grid max-w-page gap-2 px-2 md:grid-cols-2 lg:mt-section lg:px-0">
-      {features.map((feature) => (
-        <article
-          key={feature.id}
-          id={feature.id}
-          className="flex items-center gap-2 border border-ink-muted p-2 md:min-h-84"
-        >
-          <div className="relative aspect-picture-tall w-3/7 shrink-0 overflow-hidden rounded-card lg:aspect-picture lg:w-1/2">
-            <Image
-              src={feature.image}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 25vw, 20vw"
-              className="object-cover"
-            />
-            {feature.tint && <div className="absolute inset-0 bg-canvas/30" />}
+    <section className="features">
+      <article className="feature" id="design">
+        <Image src={designImg} alt="" className="feature__img" sizes="(min-width: 1100px) 336px, 50vw" />
+        <div className="feature__text">
+          <h2>{t.designTitle}</h2>
+          <p>{t.designText}</p>
+          <div className="feature__arrow">
+            <ArrowLink href={path(lang, "#design")} label={t.designTitle} />
           </div>
-          <div className="flex flex-1 flex-col items-center gap-3 lg:gap-4">
-            <h2 className="font-heading text-heading">{text[feature.id].title}</h2>
-            <p className="self-stretch px-2 font-body text-body lg:text-lead">
-              {text[feature.id].text}
-            </p>
-            <ArrowLink
-              href={path(lang, `#${feature.id}`)}
-              label={text[feature.id].title}
-            />
+        </div>
+      </article>
+      <article className="feature feature--blog" id="blog">
+        <div className="feature__media feature__media--tint">
+          <Image src={blogImg} alt="" className="feature__img" sizes="(min-width: 1100px) 336px, 50vw" />
+        </div>
+        <div className="feature__text">
+          <h2>{t.blogTitle}</h2>
+          <p>{t.blogText}</p>
+          <div className="feature__arrow">
+            <ArrowLink href={path(lang, "#blog")} label={t.blogTitle} />
           </div>
-        </article>
-      ))}
+        </div>
+      </article>
     </section>
   );
 }

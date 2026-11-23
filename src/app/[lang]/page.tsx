@@ -11,15 +11,14 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
 
   return (
-    <>
+    <div className="page">
       <Header lang={lang} />
-      <main>
-        <Hero lang={lang} />
-        <Apps lang={lang} />
-        <Features lang={lang} />
-        <span id="about" />
-      </main>
+      <Hero lang={lang} />
+      <Apps lang={lang} />
+      <Features lang={lang} />
       <Footer lang={lang} />
-    </>
+      <span id="about" />
+      <span id="contact" />
+    </div>
   );
 }

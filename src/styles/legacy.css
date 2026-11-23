@@ -1,0 +1,661 @@
+/* ==========================================================================
+   Розмітка головної, юридичних сторінок і підвалу, перенесена зі старого проєкту (App.css) як є.
+   Кольори, шрифти, радіуси й тіні беруться з токенів @theme (src/app/globals.css).
+   Кнопки, перемикачі мови й теми та стрілки — компоненти зі Storybook; тут лише їхні розміри в контексті.
+   Відстані 10 px і 9,3 px округлено до найближчого кроку (12 і 8 px).
+   ========================================================================== */
+:root {
+  --canvas: var(--color-canvas);
+  --surface: var(--color-surface);
+  --line: var(--color-line);
+  --accent: var(--color-accent);
+  --text: var(--color-ink);
+  --text-muted: var(--color-ink-muted);
+  --danger: var(--color-danger);
+
+  --font-heading: var(--font-lora), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+
+  /* Розміри тексту старого сайту: розмір / висота рядка (десктоп; планшет нижче) */
+  --fs-display: var(--text-display); --lh-display: 1.2;
+  --fs-heading: var(--text-heading); --lh-heading: 1.2;
+  --fs-title-s: var(--text-title);   --lh-title-s: 1.2;
+  --fs-lead: var(--text-lead);       --lh-lead: 1.3;
+  --fs-body: var(--text-body);       --lh-body: 1.5;
+  --fs-caption: var(--text-caption); --lh-caption: 1.4;
+
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+
+  --ratio-card: var(--aspect-cover);
+  --ratio-picture: var(--aspect-picture);
+  --ratio-hero-desktop: var(--aspect-hero-desktop);
+  --ratio-hero-tablet: var(--aspect-hero-tablet);
+  --ratio-hero-mobile: var(--aspect-hero-mobile);
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --lh-display: 1.1;
+    --lh-lead: 1.2;
+  }
+}
+
+/* Загальні правила елементів (низький пріоритет, щоб не ламати Tailwind-класи компонентів) */
+@layer base {
+  h1,
+  h2,
+  p { margin: 0; }
+  h1,
+  h2 { font-family: var(--font-heading); font-weight: 500; line-height: 1.2; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+}
+/* Tokens (colours, type scale, spacing, radii, ratios) are defined in index.css */
+.page {
+  overflow-x: clip;
+  background: var(--canvas);
+}
+
+.only-compact { display: none; }
+.apps-block { display: contents; } /* heading + app cards form one layout on tablet */
+.apps__heading { display: none; }
+.burger { display: none; }
+
+/* ---------- Header ---------- */
+.header {
+  position: relative;
+  z-index: 2; /* the logo is taller than the menu row and must stay above the hero picture */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-1) var(--space-5); /* top / bottom 8, sides 32, as in Figma; the header hugs the 51px menu row (67px) */
+}
+.logo {
+  position: absolute;
+  left: 32px;
+  top: 0;
+  width: 234px;
+  height: 116px;
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+.nav a:not(.btn) {
+  padding: var(--space-2); /* keeps the 67px header height from Figma */
+  color: var(--text);
+}
+
+/* the theme switch makes the menu wider: on small desktops use the tablet text size so the menu does not run into the logo */
+@media (min-width: 1101px) and (max-width: 1300px) {
+  .nav { font-size: 20px; gap: 4px; }
+  .nav a:not(.btn) { padding: 8px; }
+}
+
+/* ---------- Buttons ----------
+   The look (colours, shadows, radius) comes from the Button / ButtonLink components.
+   Here are only the sizes the old site gave them in context. */
+.btn--pill { height: auto; padding: var(--space-2); } /* header button: 10 -> 12 */
+.nav__cta { font-weight: 400; } /* header button keeps the regular weight from Figma */
+
+/* ---------- Hero ---------- */
+/* The photo keeps its aspect ratio (1569x1122) and sets the hero height, so the
+   transparent top strip of the photo always lines up with the top of the background. */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+.hero picture { display: contents; }
+.hero__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 927px;
+  max-width: 100%;
+  padding: 77.6px 64px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+.hero__content h1 {
+  width: 730px;
+  max-width: 100%;
+  font-size: var(--fs-display);
+}
+.hero__content p {
+  width: 518px;
+  max-width: 100%;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+.hero__actions {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 84px;
+}
+
+.hero__full {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--ratio-hero-desktop);
+}
+
+/* Desktop: the hero is one scalable "canvas". Every size is a share of its width
+   (1cqw = 1% of the hero width), so image and text scale together, as at 1440px in Figma. */
+@media (min-width: 1101px) {
+  .hero { container-type: inline-size; }
+  .hero__content {
+    top: 0;
+    left: 0;
+    width: 64.375cqw;
+    max-width: none;
+    padding: 5.389cqw 4.444cqw 0;
+    gap: 1.111cqw;
+  }
+  .hero__content h1 { width: 50.69cqw; max-width: none; font-size: 4.444cqw; }
+  .hero__content p { width: 35.97cqw; max-width: none; font-size: 1.667cqw; }
+  .hero__actions { gap: 3.333cqw; padding: 0 5.833cqw; }
+  .hero .btn {
+    height: 3.333cqw;
+    padding: 0 1.111cqw;
+    font-size: 1.667cqw;
+    border-radius: 1.667cqw;
+  }
+}
+
+/* ---------- App cards ---------- */
+.apps {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  height: 280px;
+  max-width: 1440px;
+  margin: 96px auto 64px; /* top 96 / bottom 64, as in Figma */
+}
+.card {
+  position: relative;
+  flex: 0 1 350px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-3);
+  border: 1px solid var(--text-muted);
+  --tint: rgba(252, 241, 234, 0.7); /* canvas at 70% over the photo */
+  background-image: linear-gradient(var(--tint), var(--tint)), var(--img);
+  background-repeat: no-repeat;
+  background-size: 100% 100%, cover;
+  background-position: 0 0, center;
+  color: var(--text);
+}
+.card h2 {
+  align-self: stretch;
+  font-size: var(--fs-heading);
+}
+.card--title {
+  background: var(--surface);
+  border-color: var(--surface);
+  border-radius: var(--radius-card);
+}
+.card--health {
+  /* Figma crop: 120.68% x 226.61% of the card, offset -20.54% / -71.87% */
+  background-size: 100% 100%, 120.68% 226.61%;
+  background-position: 0 0, 99.32% 56.77%;
+}
+.card__badge {
+  position: absolute;
+  top: -50px;
+  right: -24px;
+  width: 173px;
+  height: 82px;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
+}
+/* the English label is wider (2.5:1) than the Ukrainian one: keep its arrow tip on the same spot */
+.card__badge--en {
+  object-fit: contain;
+  object-position: left bottom;
+}
+.card__art {
+  position: absolute;
+  pointer-events: none;
+}
+.card--yarn .card__art {
+  right: 17px;
+  bottom: 21px;
+  width: 108px;
+  height: 134px;
+}
+.card--health .card__art {
+  right: 9px;
+  bottom: 12px;
+  width: 170.5px;
+  height: 108px;
+}
+.card--app:hover { box-shadow: var(--shadow-card); }
+
+/* ---------- Features (Design / Blog) ---------- */
+.features {
+  display: flex;
+  gap: var(--space-1);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-bottom: 64px;
+}
+.feature {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  overflow: hidden;
+}
+/* Picture takes at most 47% of the block (336px max, reached at 1440px), so the text column never gets squeezed */
+.feature__media {
+  position: relative;
+  flex: none;
+  width: min(336px, 47%);
+  aspect-ratio: var(--ratio-picture);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.feature__media--tint::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(252, 241, 234, 0.3); /* canvas at 30% */
+}
+.feature__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.feature > .feature__img {
+  flex: none;
+  width: min(336px, 47%);
+  height: auto;
+  aspect-ratio: var(--ratio-picture);
+  border-radius: var(--radius-card);
+}
+.feature__text {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* title, text and arrow share one left edge */
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  text-align: left;
+}
+.feature__arrow { padding-left: var(--space-3); }
+.feature__text h2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 63px; /* fixed in Figma */
+  font-size: var(--fs-heading);
+  padding: 0 var(--space-3);
+}
+.feature__text p {
+  display: flex;
+  align-items: center;
+  min-height: 190px; /* 190px in Figma; grows when the text is longer (e.g. English) */
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  padding: var(--space-3);
+  text-align: left;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 64px;
+  padding: 56px var(--space-5) var(--space-4);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  color: var(--text);
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+  gap: var(--space-5);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.footer__logo { display: block; width: 180px; }
+.footer__logo img { width: 100%; height: auto; }
+.footer__brand p {
+  max-width: 300px;
+  margin-top: var(--space-2);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+.footer__lang {
+  margin-top: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-control);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-caption);
+  cursor: pointer;
+}
+.footer__lang:hover { background: var(--line); }
+.footer__col h3 {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: var(--fs-title-s);
+  line-height: var(--lh-title-s);
+}
+.footer__col ul { margin: 0; padding: 0; list-style: none; }
+.footer__col li { margin-bottom: var(--space-2); font-size: var(--fs-body); line-height: var(--lh-body); }
+.footer__col a { text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.2s; }
+.footer__col a:hover { text-decoration-color: currentColor; }
+.footer__soon { font-size: var(--fs-caption); color: var(--text-muted); }
+.footer__copy {
+  max-width: 1440px;
+  margin: var(--space-5) auto 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-muted);
+}
+
+/* ---------- Legal pages (Privacy Policy, Support) ---------- */
+.legal { background: var(--canvas); min-height: 100vh; display: flex; flex-direction: column; }
+.legal__main {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px var(--space-4) var(--space-4);
+}
+.legal__main h1 { font-size: var(--fs-display); line-height: var(--lh-display); }
+.legal__updated { margin-top: var(--space-1); font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--text-muted); }
+.legal__intro { margin-top: var(--space-4); font-size: var(--fs-body); line-height: var(--lh-body); }
+.legal__main a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.legal__main a:hover { text-decoration-thickness: 2px; }
+.legal__toc {
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border-radius: var(--radius-card);
+}
+.legal__toc h2 { font-size: var(--fs-title-s); line-height: var(--lh-title-s); margin-bottom: var(--space-1); }
+.legal__toc ol { margin: 0; padding-left: var(--space-4); font-size: var(--fs-body); line-height: var(--lh-body); }
+.legal__toc li { margin-bottom: var(--space-1); }
+.legal__section { margin-top: 40px; scroll-margin-top: var(--space-4); }
+.legal__section h2 { font-size: var(--fs-heading); line-height: var(--lh-heading); margin-bottom: var(--space-2); }
+.legal__section p, .legal__section li { font-size: var(--fs-body); line-height: var(--lh-body); }
+.legal__section p { margin-top: var(--space-2); }
+.legal__section ul { margin: var(--space-2) 0 0; padding-left: var(--space-4); }
+.legal__section li { margin-bottom: var(--space-2); }
+.legal .footer { margin-top: 64px; }
+
+/* Contact form */
+.contact { margin-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
+.contact__field { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--fs-body); line-height: var(--lh-body); }
+.contact input[type='text'],
+.contact input[type='email'],
+.contact select,
+.contact textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-body);
+}
+.contact ::placeholder { color: var(--text-muted); opacity: 1; }
+.contact textarea { resize: vertical; min-height: 160px; line-height: var(--lh-body); }
+.contact input:focus,
+.contact select:focus,
+.contact textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.contact__trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact__consent { display: flex; gap: var(--space-2); align-items: flex-start; font-size: var(--fs-caption); line-height: var(--lh-body); }
+.contact__consent input { width: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
+.contact__problem { color: var(--danger); font-size: var(--fs-body); line-height: var(--lh-body); }
+.contact__submit { align-self: flex-start; height: 52px; padding: 0 var(--space-5); font-size: var(--fs-body); cursor: pointer; border: 0; }
+.contact__submit:disabled { opacity: 0.6; cursor: default; }
+.contact__done {
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+.contact__direct { margin-top: var(--space-5); font-size: var(--fs-body); line-height: var(--lh-body); color: var(--text-muted); }
+
+@media (max-width: 1100px) {
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .footer { padding: 40px var(--space-3) var(--space-3); }
+  .footer__grid { grid-template-columns: 1fr; gap: var(--space-5); }
+  .legal__main { padding: var(--space-5) var(--space-3) var(--space-3); }
+}
+
+/* ---------- Tablet (768) ---------- */
+@media (max-width: 1100px) {
+  .only-desktop { display: none; }
+  .only-compact { display: inline; }
+
+  /* as in Figma: auto layout, horizontal, aligned right + centre, gap 12, header hugs the 35px menu row */
+  .header { padding: var(--space-1); min-height: 0; margin-bottom: var(--space-2); }
+  /* logo is 182x90 at 768px and shrinks with the menu on narrower tablets */
+  .logo { left: 0; top: -7px; width: min(182px, calc(28.76vw - 38.9px)); height: auto; aspect-ratio: 182 / 90; }
+  .nav {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-end;
+    font-size: clamp(13px, 1.95vw, 15px);
+    line-height: normal;
+    gap: clamp(2px, 0.78vw, 6px);
+  }
+  .nav a:not(.btn) { padding: clamp(4px, 1.04vw, 8px) clamp(2px, 0.52vw, 4px); }
+  /* compact switches so the menu still fits next to the logo */
+  .langsw { font-size: 14px; }
+  .langsw__opt { height: 28px; min-width: 38px; padding: 0 8px; }
+  .langsw__opt.langsw__opt--hidden { min-width: 0; padding: 0; }
+  .themesw { width: 48px; height: 32px; padding: 2px; }
+  .themesw__knob { width: 26px; height: 26px; }
+  .themesw__knob svg { width: 16px; height: 16px; }
+  .themesw--dark .themesw__knob { transform: translateX(16px); }
+  .nav .nav__cta { gap: 4px; padding: clamp(4px, 1.04vw, 8px); font-size: inherit; }
+  .nav__cta svg { width: 16px; height: 16px; }
+
+  /* hero text: sizes are set in cqw below (tablet) and in the mobile block */
+  .hero__content { max-width: none; align-items: stretch; }
+  .hero__content h1 { width: auto; line-height: var(--lh-display); }
+  .hero__content p { width: auto; line-height: var(--lh-lead); }
+  .hero__actions { justify-content: flex-start; flex-wrap: wrap; }
+  .btn--pill { padding: var(--space-1); }
+
+  .apps__heading {
+    display: block;
+    font-size: var(--fs-heading);
+    margin: var(--space-2) 0 0;
+  }
+  .apps {
+    gap: var(--space-2);
+    margin: 0;
+    padding: 64px var(--space-1) var(--space-3); /* top 64 / bottom 16, as in Figma */
+    max-width: none;
+    height: auto;
+  }
+  .card--title { display: none; }
+  .card {
+    flex: 1 1 0;
+    height: 280px;
+    justify-content: flex-start;
+    padding: var(--space-3);
+  }
+  .card--yarn {
+    background-size: 100% 100%, 122.06% 97.22%;
+    background-position: 0 0, 50.5% 44.2%;
+  }
+  .card--health {
+    background-size: 100% 100%, 121.34% 156.67%;
+    background-position: 0 0, 100% 49.5%;
+  }
+  /* badge is 173px wide on a 244px card at 768px: keep that share on narrower tablets */
+  .card__badge { top: auto; right: auto; width: 70.9%; height: auto; aspect-ratio: 173 / 82; }
+  /* "У розробці" labels sit on one level, just above the cards (as in Figma) */
+  .card--yarn .card__badge { left: 17.6%; top: -17.1%; }
+  .card--health .card__badge { left: 27.5%; top: -17.1%; }
+  .card--plants .card__badge { left: 29.5%; top: -17.1%; }
+  .card--yarn .card__art { right: 14px; bottom: 25px; width: 97px; height: 120.4px; }
+  .card--health .card__art { right: 18px; bottom: 18px; width: 131px; height: 83px; }
+
+  .features { gap: var(--space-1); padding: var(--space-1) var(--space-1) 48px; max-width: none; }
+  .feature {
+    gap: var(--space-1);
+    padding: 0 var(--space-1);
+    border: 1px solid var(--text-muted);
+    box-shadow: var(--shadow-box);
+  }
+  .feature > .feature__img,
+  .feature__media {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    height: 233px;
+  }
+  .feature > .feature__img { object-position: 50% 0; }
+  .feature__text { padding: var(--space-1) var(--space-3); }
+  .feature__text p { font-size: var(--fs-body); line-height: normal; align-items: flex-start; }
+}
+
+/* Tablet: the hero is one scalable image + text sized in cqw (1cqw = 1% of the 768px frame) */
+@media (min-width: 601px) and (max-width: 1100px) {
+  /* Figma: the whole tablet page is one vertical auto layout, gap 32, padding 0 */
+  .page { display: flex; flex-direction: column; gap: var(--space-5); }
+  .page > span[id] { position: absolute; } /* empty anchors must not create extra gaps */
+  .page > .footer { margin-top: 0; }
+  .header { margin-bottom: 0; }
+  /* "My apps" heading + cards: their own vertical layout */
+  .apps-block { display: flex; flex-direction: column; gap: var(--space-2); }
+  .apps__heading { margin: 0; }
+  .features { padding: 0 var(--space-1); }
+
+  .hero { container-type: inline-size; }
+  .hero__full { aspect-ratio: var(--ratio-hero-tablet); }
+  .hero__content {
+    top: 3.906cqw;
+    width: 60.03cqw;
+    padding: 1.042cqw 4.167cqw 0 2.083cqw;
+    gap: 1.042cqw;
+  }
+  .hero__content h1 { padding: 0 1.302cqw; font-size: 5.208cqw; }
+  .hero__content p { padding: 0 1.302cqw; font-size: 2.604cqw; }
+  .hero__actions { gap: 2.083cqw; padding: 0 8.333cqw 0 2.083cqw; }
+  .hero .btn { padding: 1.042cqw 2.083cqw; font-size: 2.083cqw; border-radius: 3.125cqw; }
+}
+
+/* ---------- Mobile (390) ---------- */
+@media (max-width: 600px) {
+  .header { padding: var(--space-1); min-height: 79px; gap: var(--space-3); }
+  .logo { top: 8px; width: 161px; height: 71px; }
+  .burger {
+    display: block;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .nav { gap: 0; }
+  .nav a:not(.btn) { display: none; }
+  .nav .nav__cta { display: none; }
+  .nav--open {
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    right: var(--space-1);
+    left: var(--space-1);
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-1);
+    background: var(--canvas);
+    border: 1px solid var(--text-muted);
+    border-radius: var(--radius-control);
+    box-shadow: 0 8px 24px rgba(64, 37, 16, 0.2);
+  }
+  .nav--open a:not(.btn) { display: block; }
+  .nav--open .nav__cta { display: inline-flex; justify-content: center; }
+
+  /* Mobile: one scalable image (780x1234) + text sized in cqw (1cqw = 1% of the 390px frame) */
+  .hero { container-type: inline-size; margin-top: var(--space-3); }
+  .hero__full { aspect-ratio: var(--ratio-hero-mobile); }
+  .hero__content {
+    top: 2.821cqw;
+    width: 100%;
+    padding: 0 8.205cqw 4.103cqw 2.051cqw;
+    gap: 2.051cqw;
+  }
+  .hero__content h1 { padding: 0 2.564cqw; font-size: 10.256cqw; }
+  .hero__content p { padding: 0 2.564cqw; font-size: 5.128cqw; }
+  .hero__actions { gap: 4.103cqw; padding: 0 16.41cqw 0 4.103cqw; }
+  .hero .btn { padding: 2.051cqw 4.103cqw; font-size: 4.103cqw; border-radius: 6.154cqw; }
+  .hero__actions .btn--outline { background: var(--surface); }
+
+  .apps__heading { font-size: var(--fs-display); line-height: var(--lh-display); margin: var(--space-3) 0 0; padding: 0 var(--space-1); }
+  .apps { flex-direction: column; gap: var(--space-1); padding: var(--space-3) var(--space-1); }
+  .card {
+    flex: none;
+    width: 100%;
+    height: 343.76px;
+    justify-content: center;
+    padding: 29.76px 14.88px;
+    border-width: 0.93px;
+    --tint: rgba(252, 241, 234, 0.85);
+  }
+  .card--health { --tint: rgba(252, 241, 234, 0.8); }
+  .card--plants { height: 316.24px; padding: var(--space-3); }
+  .card h2 { font-size: 29.76px; min-height: 3.6em; }
+  .card--plants h2 { min-height: 0; }
+  .card__badge { width: 173px; height: 82px; aspect-ratio: auto; }
+  .card--yarn .card__badge { left: 84px; top: 35px; }
+  .card--health .card__badge { left: 82px; top: 18px; width: 155px; height: 81px; }
+  .card--plants .card__badge { left: 82px; top: 46px; }
+  .card--yarn .card__art { right: 28px; bottom: 0; width: 144.4px; height: 179px; }
+  .card--health .card__art { right: 25px; bottom: 2px; width: 236px; height: 149.5px; }
+
+  .features { flex-direction: column; gap: var(--space-1); padding: var(--space-1) var(--space-1) var(--space-5); }
+  .feature { flex: none; }
+  .feature__text { padding: var(--space-1) var(--space-3); }
+  .feature__text p { height: auto; min-height: 0; padding: 0; }
+  .feature__text h2 { padding: 0; }
+  .feature__arrow { padding-left: 0; }
+}
+
+/* narrow tablets: the menu is squeezed a bit more next to the logo */
+@media (min-width: 601px) and (max-width: 700px) {
+  .nav { gap: 0; }
+  .nav a:not(.btn) { padding: 6px 2px; }
+  .langsw__opt { height: 26px; min-width: 34px; padding: 0 6px; }
+  .themesw { width: 42px; height: 30px; }
+  .themesw__knob { width: 24px; height: 24px; }
+  .themesw--dark .themesw__knob { transform: translateX(12px); }
+}

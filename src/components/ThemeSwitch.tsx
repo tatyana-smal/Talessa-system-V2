@@ -57,11 +57,11 @@ export function ThemeSwitch({ label }: ThemeSwitchProps) {
       aria-label={label}
       title={label}
       onClick={() => writeTheme(dark ? "light" : "dark")}
-      className="relative inline-flex h-11 w-17 cursor-pointer items-center rounded-full border border-line bg-canvas p-1 text-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      className={`themesw${dark ? " themesw--dark" : ""} relative inline-flex h-11 w-17 cursor-pointer items-center rounded-full border border-line bg-canvas p-1 text-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
     >
       <span
         aria-hidden="true"
-        className={`flex size-9 items-center justify-center rounded-full bg-ink shadow-button-primary transition-transform duration-300 motion-reduce:transition-none ${
+        className={`themesw__knob flex size-9 items-center justify-center rounded-full bg-ink shadow-button-primary transition-transform duration-300 motion-reduce:transition-none ${
           dark ? "translate-x-6" : ""
         }`}
       >

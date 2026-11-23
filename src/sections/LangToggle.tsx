@@ -21,7 +21,7 @@ export function LangToggle({ lang, label }: { lang: Lang; label: string }) {
       onClick={() => {
         document.cookie = `${LANG_COOKIE}=${other}; path=/; max-age=31536000; samesite=lax`;
       }}
-      className="rounded-control border border-ink-muted px-4 py-2 font-body text-caption text-ink hover:bg-line focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      className="footer__lang"
     >
       {lang === "uk" ? "UA" : "EN"}
     </Link>

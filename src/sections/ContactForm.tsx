@@ -74,7 +74,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
     return (
       <p
         role="status"
-        className="mt-8 rounded-card bg-surface px-8 py-6 font-body text-body"
+        className="contact__done"
       >
         {status === "sent" ? t.success : t.successMailto}
       </p>
@@ -82,7 +82,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="mt-8 flex flex-col gap-6">
+    <form onSubmit={onSubmit} noValidate className="contact">
       <FormField label={t.name} name="name" autoComplete="name" maxLength={100} />
       <FormField
         label={`${t.email} *`}
@@ -110,7 +110,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        className="absolute -left-full size-px opacity-0"
+        className="contact__trap"
       />
 
       <CheckboxField name="consent">
@@ -118,21 +118,21 @@ export function ContactForm({ lang }: { lang: Lang }) {
       </CheckboxField>
 
       {problem && (
-        <p role="alert" className="font-body text-body text-danger">
+        <p role="alert" className="contact__problem">
           {problem}
         </p>
       )}
       {status === "error" && (
-        <p role="alert" className="font-body text-body text-danger">
+        <p role="alert" className="contact__problem">
           {t.error}{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-4">
+          <a href={`mailto:${CONTACT_EMAIL}`}>
             {CONTACT_EMAIL}
           </a>
         </p>
       )}
 
       <div>
-        <Button type="submit" size="md" disabled={status === "sending"}>
+        <Button type="submit" size="md" className="contact__submit" disabled={status === "sending"}>
           {status === "sending" ? t.sending : t.submit}
         </Button>
       </div>

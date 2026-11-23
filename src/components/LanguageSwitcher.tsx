@@ -62,7 +62,7 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
       ref={ref}
       role="group"
       aria-label={label}
-      className="inline-flex items-center gap-0.5 rounded-full border border-line bg-canvas p-1"
+      className="langsw inline-flex items-center gap-0.5 rounded-full border border-line bg-canvas p-1"
     >
       {options.map(({ code, label: text }) => {
         const active = code === lang;
@@ -80,7 +80,7 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
               aria-pressed
               aria-expanded={open}
               onClick={() => setOpen((value) => !value)}
-              className={`${option}${size} bg-ink text-canvas shadow-button-primary cursor-pointer`}
+              className={`langsw__opt langsw__opt--active ${option}${size} bg-ink text-canvas shadow-button-primary cursor-pointer`}
             >
               {text}
             </button>
@@ -97,7 +97,7 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
               document.cookie = `${LANG_COOKIE}=${code}; path=/; max-age=31536000; samesite=lax`;
               setOpen(false);
             }}
-            className={`${option}${size} text-ink hover:bg-surface`}
+            className={`btn langsw__opt${hidden ? " langsw__opt--hidden" : ""} ${option}${size} text-ink hover:bg-surface`}
           >
             {text}
           </Link>

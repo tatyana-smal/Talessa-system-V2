@@ -20,23 +20,17 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
   const t = contact[lang];
 
   return (
-    <>
+    <div className="legal">
       <Header lang={lang} />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-4 pb-4 pt-8 sm:px-6">
-        <h1 className="font-heading text-display">{t.title}</h1>
-        <p className="mt-6 font-body text-body">{t.intro}</p>
+      <main className="legal__main">
+        <h1>{t.title}</h1>
+        <p className="legal__intro">{t.intro}</p>
         <ContactForm lang={lang} />
-        <p className="mt-8 font-body text-body text-ink-muted">
-          {t.or}{" "}
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="text-ink underline underline-offset-4 hover:decoration-2"
-          >
-            {CONTACT_EMAIL}
-          </a>
+        <p className="contact__direct">
+          {t.or} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
       </main>
       <Footer lang={lang} />
-    </>
+    </div>
   );
 }

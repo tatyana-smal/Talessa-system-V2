@@ -34,8 +34,8 @@ export default async function MyYarnPage({ params }: PageProps<"/[lang]/my-yarn"
 
   return (
     <>
-      <Header lang={lang} />
       <div className="yarn">
+          <Header lang={lang} />
         <div className="yarn-wrap">
           <section className="yarn-hero">
             <Image
@@ -130,8 +130,8 @@ export default async function MyYarnPage({ params }: PageProps<"/[lang]/my-yarn"
             </p>
           </section>
         </div>
+        <Footer lang={lang} />
       </div>
-      <Footer lang={lang} />
     </>
   );
 }
