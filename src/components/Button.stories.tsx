@@ -9,31 +9,34 @@ const meta = {
     docs: {
       description: {
         component: `
-Кнопка для дій: «Написати мені», «Переглянути застосунки», «Про мене». Форма — пігулка (\`rounded-control\`).
+Кнопка для дій на сторінці: «Написати мені», «Переглянути застосунки». Кути — \`rounded-control\`.
 
 ### Параметри
 - \`variant\`: \`primary\` (за замовчуванням) або \`secondary\`.
-- \`size\`: \`md\` (за замовчуванням, \`text-body\`) або \`lg\` (\`text-lead\`).
-- \`disabled\`: вимкнена кнопка, \`false\` за замовчуванням.
+- \`size\`: \`md\` (звичайна, \`text-body\`, за замовчуванням) або \`lg\` (велика, \`text-lead\`).
+- \`disabled\`: вимкнена кнопка, \`false\` за замовчуванням. Робиться через \`aria-disabled\`, не через атрибут \`disabled\`.
+- \`disabledReason\`: текст пояснення під вимкненою кнопкою. Зв'язується з кнопкою через \`aria-describedby\`, екранний читач прочитає його разом із кнопкою.
 - \`children\`: підпис. Решта атрибутів \`<button>\` (\`onClick\`, \`type\`) передаються далі; \`type\` за замовчуванням \`button\`.
 
 ### Варіанти і стани
-- \`primary\`: заливка \`ink\`, підпис \`canvas\`. Наведення: заливка \`ink-muted\`.
-- \`secondary\`: без заливки, межа \`ink-muted\`, підпис \`ink\`. Наведення: заливка \`surface\`.
-- Фокус з клавіатури (Tab): контур \`accent\`.
-- \`disabled\`: заливка й межа \`line\`, підпис \`ink-muted\`.
+- \`primary\`: заливка \`accent\`, підпис \`canvas\` (контраст 6,02:1). Наведення: заливка й межа \`ink\`.
+- \`secondary\`: без заливки, межа \`ink-muted\` (6,21:1 на \`canvas\`), підпис \`ink\` (12,69:1). Наведення: заливка \`surface\`.
+- Фокус з клавіатури (Tab): контур 2 px \`ink\` із відступом, контраст 12,69:1 на \`canvas\`.
+- \`disabled\`: кнопка лишається у фокусі, натискання нічого не робить, кнопка не відправляє форму. У \`primary\` заливка й межа \`line\`, підпис \`ink\` (6,26:1). У \`secondary\` межа \`line\`, підпис \`ink-muted\` (6,21:1). Наведення стану не змінює.
 
 ### Токени
-\`ink\`, \`ink-muted\`, \`canvas\`, \`surface\`, \`line\`, \`accent\`, \`rounded-control\`, \`text-body\`, \`text-lead\`, \`font-body\`, відступи 8 і 16 px.
+\`accent\`, \`canvas\`, \`ink\`, \`ink-muted\`, \`surface\`, \`line\`, \`rounded-control\`, \`text-body\`, \`text-lead\`, \`text-caption\` (пояснення), \`font-body\`, відступи 8, 12, 16 і 24 px.
 
 ### Коли використовувати
-Одна \`primary\` на екран для головної дії, поруч за потреби \`secondary\`. Кнопка виконує дію на сторінці. Для переходу на іншу сторінку компонента-посилання поки немає. Кругла кнопка зі стрілкою й кнопка з іконкою на макеті — окремі компоненти, цей їх не покриває.
+Одна \`primary\` на екран для головної дії, поруч за потреби \`secondary\`. Вимикай кнопку тільки разом із \`disabledReason\`: користувач має зрозуміти, чому дія недоступна. Кнопка виконує дію на сторінці; для переходу на іншу сторінку компонента-посилання поки немає.
 
 ### Як брати в код
 \`\`\`tsx
 import { Button } from "@/components/Button";
 
-<Button variant="secondary" size="lg" onClick={...}>Про мене</Button>
+<Button variant="secondary" size="lg" onClick={save}>Зберегти</Button>
+
+<Button disabled disabledReason="Заповніть імʼя, щоб надіслати">Надіслати</Button>
 \`\`\`
 `,
       },
@@ -43,12 +46,14 @@ import { Button } from "@/components/Button";
     variant: { control: "select", options: ["primary", "secondary"] },
     size: { control: "select", options: ["md", "lg"] },
     disabled: { control: "boolean" },
+    disabledReason: { control: "text" },
   },
   args: {
     children: "Написати мені",
     variant: "primary",
     size: "md",
     disabled: false,
+    disabledReason: "Кнопка недоступна, поки не заповнено форму",
   },
 } satisfies Meta<typeof Button>;
 
