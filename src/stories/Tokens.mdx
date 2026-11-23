@@ -1,0 +1,91 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Tokens" />
+
+# Токени
+
+Єдине джерело значень — блок `@theme` у `src/app/globals.css`. Тут вони лише показані. Назви описують роль, а не колір.
+
+## Кольори
+
+<ColorPalette>
+  <ColorItem
+    title="canvas"
+    subtitle="Фон сторінки, поля форми, підпис на темних кнопках"
+    colors={{ canvas: "var(--color-canvas)" }}
+  />
+  <ColorItem
+    title="surface"
+    subtitle="Картки, підвал"
+    colors={{ surface: "var(--color-surface)" }}
+  />
+  <ColorItem
+    title="line"
+    subtitle="Лише декоративні лінії й розділювачі"
+    colors={{ line: "var(--color-line)" }}
+  />
+  <ColorItem
+    title="accent"
+    subtitle="Акцент: фокус, заголовки-мітки"
+    colors={{ accent: "var(--color-accent)" }}
+  />
+  <ColorItem
+    title="ink"
+    subtitle="Основний текст, заливка кнопок"
+    colors={{ ink: "var(--color-ink)" }}
+  />
+  <ColorItem
+    title="ink-muted"
+    subtitle="Підписи, плейсхолдер, межі полів і карток"
+    colors={{ "ink-muted": "var(--color-ink-muted)" }}
+  />
+  <ColorItem
+    title="danger"
+    subtitle="Помилка: текст і межа поля (значення запропоноване)"
+    colors={{ danger: "var(--color-danger)" }}
+  />
+</ColorPalette>
+
+## Шрифти й розміри тексту
+
+Заголовки — Lora Medium (`font-heading`), текст — Inter Regular (`font-body`). Розміри: `text-caption`, `text-body`, `text-lead`, `text-title`, `text-heading`, `text-display`. На ширині до 1100 px `display`, `heading` і `lead` меншають.
+
+<Typeset
+  fontFamily="var(--font-lora), Georgia, serif"
+  fontSizes={["var(--text-display)", "var(--text-heading)", "var(--text-title)"]}
+  fontWeight={500}
+  sampleText="Застосунки, що турбуються"
+/>
+
+<Typeset
+  fontFamily="var(--font-inter), system-ui, sans-serif"
+  fontSizes={["var(--text-lead)", "var(--text-body)", "var(--text-caption)"]}
+  fontWeight={400}
+  sampleText="Застосунки, що турбуються про те, що для нас важливе"
+/>
+
+## Радіуси
+
+<div className="flex gap-6 p-4">
+  <div className="bg-surface border border-ink-muted rounded-control w-32 h-20 flex items-center justify-center text-body">control</div>
+  <div className="bg-surface border border-ink-muted rounded-card w-32 h-20 flex items-center justify-center text-body">card</div>
+</div>
+
+## Пропорції картинок
+
+<div className="flex gap-6 p-4 items-start">
+  <div className="bg-surface border border-ink-muted w-48 aspect-cover flex items-center justify-center text-caption">aspect-cover</div>
+  <div className="bg-surface border border-ink-muted w-48 aspect-picture flex items-center justify-center text-caption">aspect-picture</div>
+</div>
+
+## Відступи
+
+Тільки п'ять кроків: 8, 12, 16, 24, 32 px (`2`, `3`, `4`, `6`, `8` у класах: `p-2`, `gap-4`).
+
+<div className="flex gap-6 p-4 items-end">
+  <div className="bg-accent w-2 h-2" />
+  <div className="bg-accent w-3 h-3" />
+  <div className="bg-accent w-4 h-4" />
+  <div className="bg-accent w-6 h-6" />
+  <div className="bg-accent w-8 h-8" />
+</div>

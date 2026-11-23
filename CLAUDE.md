@@ -16,7 +16,13 @@
 
 ## Токени
 
-Заповнимо далі.
+Єдине джерело значень: блок `@theme` у `src/app/globals.css`. Показані в Storybook: `Foundations/Tokens` (`npm run storybook`, порт 6006).
+
+- Кольори: `canvas`, `surface`, `line`, `accent`, `ink`, `ink-muted`, `danger` (`danger` запропонований, на макеті його немає).
+- Текст: `text-caption`, `text-body`, `text-lead`, `text-title`, `text-heading`, `text-display`; шрифти `font-heading` (Lora), `font-body` (Inter).
+- Радіуси: `rounded-control`, `rounded-card`. Пропорції: `aspect-cover`, `aspect-picture`, `aspect-hero-*`.
+- Відступи: тільки 8, 12, 16, 24, 32 px (класи 2, 3, 4, 6, 8).
+- Стандартні шкали Tailwind (кольори, розміри тексту, радіуси) скинуто: класи на кшталт `text-white`, `bg-blue-600`, `text-sm` не працюють. Hex і значення в квадратних дужках не використовуємо.
 
 ## Компоненти
 
