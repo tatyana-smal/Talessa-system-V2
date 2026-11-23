@@ -1,7 +1,20 @@
-﻿export default function Home() {
+﻿import { Apps } from "@/sections/Apps";
+import { Features } from "@/sections/Features";
+import { Footer } from "@/sections/Footer";
+import { Header } from "@/sections/Header";
+import { Hero } from "@/sections/Hero";
+
+export default function Home() {
   return (
-    <main className="flex flex-1 items-center justify-center p-8">
-      <h1 className="font-heading text-heading text-ink">Talessa</h1>
-    </main>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Apps />
+        <Features />
+        <span id="about" />
+      </main>
+      <Footer />
+    </>
   );
 }

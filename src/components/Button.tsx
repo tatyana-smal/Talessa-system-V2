@@ -40,6 +40,11 @@ const sizes: Record<ButtonSize, string> = {
   lg: "px-6 py-3 text-lead",
 };
 
+/** Класи кнопки: один вигляд для `Button` і `ButtonLink`. */
+export function buttonClasses(variant: ButtonVariant, size: ButtonSize) {
+  return `${base} ${variants[variant]} ${sizes[size]}`;
+}
+
 /**
  * Кнопка. Підпис — це `children`; звичайні атрибути `<button>` (`onClick`, `type`) працюють.
  */

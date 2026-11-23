@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /*
  * Токени дизайн-системи Talessa. Єдине джерело значень.
@@ -64,6 +64,10 @@
   /* Радіуси */
   --radius-control: 24px; /* кнопки, поля, чипи */
   --radius-card: 50px; /* картки й картинки */
+
+  /* Ширина контенту й відстань між великими секціями */
+  --container-page: 1440px; /* max-w-page */
+  --spacing-section: 96px; /* mt-section, py-section: між великими секціями */
 
   /* Пропорції картинок */
   --aspect-cover: 5 / 4; /* обкладинка картки застосунку */
