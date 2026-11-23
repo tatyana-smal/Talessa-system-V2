@@ -30,6 +30,7 @@
 
 - `Button` (`src/components/Button.tsx`): `variant` primary/secondary, `size` md/lg, `disabled` (через `aria-disabled`, кнопка лишається у фокусі) і `disabledReason` (пояснення під кнопкою).
 - `FormField` (`src/components/FormField.tsx`): текстове поле з підписом над ним; `label`, `error`, `errorText`, `disabled`, значення через `defaultValue`/`value`.
+- `Navigation` (`src/components/Navigation.tsx`): меню сайту; `items`, `activeHref`; до 1024 px згортається в кнопку «Меню», відкрите лежить поверх контенту, закривається Escape.
 
 Після додавання нового файлу з компонентом перезапусти Storybook (`npm run storybook`), інакше його класи Tailwind можуть не підхопитись.
 
