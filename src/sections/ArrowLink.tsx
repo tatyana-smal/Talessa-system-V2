@@ -21,16 +21,16 @@ export function ArrowLink({
     >
       <svg
         aria-hidden="true"
-        viewBox="0 0 32 24"
-        className="h-6 w-8 max-md:h-4"
+        viewBox="0 0 64 32"
+        className="h-8 w-16 max-md:h-6 max-md:w-12"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="3.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M2 12h28" />
-        <path d="m21 3 9 9-9 9" />
+        <path d="M2 16h60" />
+        <path d="m44 2 18 14-18 14" />
       </svg>
     </ButtonLink>
   );
