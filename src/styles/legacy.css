@@ -107,6 +107,7 @@
 /* ---------- Buttons ----------
    The look (colours, shadows, radius) comes from the Button / ButtonLink components.
    Here are only the sizes the old site gave them in context. */
+.btn { height: 48px; } /* як у старому: висота фіксована, а не від рядка тексту */
 .btn--pill { height: auto; padding: var(--space-2); } /* header button: 10 -> 12 */
 .nav__cta { font-weight: 400; } /* header button keeps the regular weight from Figma */
 
@@ -347,6 +348,7 @@
   line-height: var(--lh-body);
 }
 .footer__lang {
+  display: inline-block; /* це посилання, а не кнопка: без цього верхній відступ не працює */
   margin-top: var(--space-3);
   padding: var(--space-1) var(--space-3);
   border: 1px solid var(--text-muted);
@@ -482,7 +484,7 @@
   .themesw { width: 48px; height: 32px; padding: 2px; }
   .themesw__knob { width: 26px; height: 26px; }
   .themesw__knob svg { width: 16px; height: 16px; }
-  .themesw--dark .themesw__knob { transform: translateX(16px); }
+  .themesw--dark .themesw__knob { translate: 16px 0; }
   .nav .nav__cta { gap: 4px; padding: clamp(4px, 1.04vw, 8px); font-size: inherit; }
   .nav__cta svg { width: 16px; height: 16px; }
 
@@ -657,5 +659,5 @@
   .langsw__opt { height: 26px; min-width: 34px; padding: 0 6px; }
   .themesw { width: 42px; height: 30px; }
   .themesw__knob { width: 24px; height: 24px; }
-  .themesw--dark .themesw__knob { transform: translateX(12px); }
+  .themesw--dark .themesw__knob { translate: 12px 0; }
 }
