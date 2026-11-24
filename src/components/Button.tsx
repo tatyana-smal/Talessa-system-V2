@@ -54,10 +54,10 @@ const variants: Record<ButtonVariant, string> = {
   menu: menuLook,
   secondary:
     "border border-ink bg-transparent text-ink shadow-button-secondary " +
-    "not-aria-disabled:not-aria-busy:not-active:hover:bg-fill-secondary-active " +
-    "not-aria-disabled:not-aria-busy:not-active:focus-visible:bg-fill-secondary-active " +
-    "not-aria-disabled:active:bg-fill-secondary-active not-aria-disabled:active:shadow-button-pressed " +
-    "aria-busy:bg-fill-secondary-active aria-busy:shadow-button-pressed",
+    "not-aria-disabled:not-aria-busy:not-active:hover:bg-canvas not-aria-disabled:not-aria-busy:not-active:hover:bg-fill-secondary-active " +
+    "not-aria-disabled:not-aria-busy:not-active:focus-visible:bg-canvas not-aria-disabled:not-aria-busy:not-active:focus-visible:bg-fill-secondary-active " +
+    "not-aria-disabled:active:bg-canvas not-aria-disabled:active:bg-fill-secondary-active not-aria-disabled:active:shadow-button-pressed " +
+    "aria-busy:bg-canvas aria-busy:bg-fill-secondary-active aria-busy:shadow-button-pressed",
   arrow: `${primaryLook} h-12 w-24 px-0`,
   arrowMobile:
     "h-6 w-20 border border-transparent bg-canvas px-0 text-ink shadow-button-arrow-small " +
