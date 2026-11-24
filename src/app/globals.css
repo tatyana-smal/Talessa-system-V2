@@ -35,7 +35,7 @@
   --gradient-fill-primary: linear-gradient(179deg, rgb(71 43 25 / 0.2) 3.55%, rgb(56 32 15 / 0.2) 96.9%); /* default */
   --gradient-fill-primary-focus: linear-gradient(179deg, rgb(255 255 255 / 0.4) 3.55%, rgb(53 35 22 / 0.4) 96.9%); /* hover, focus */
   --gradient-fill-primary-pressed: linear-gradient(179deg, rgb(153 148 146 / 0.4) 3.55%, rgb(53 35 22 / 0.4) 96.9%); /* pressed, processed */
-  --gradient-fill-secondary-active: linear-gradient(180deg, #f7e5d5, #9e8b7c); /* hover, focus, pressed, processed */
+  --gradient-fill-secondary-active: linear-gradient(180deg, #f6dfca, rgb(150 122 100 / 0.8)); /* hover, focus, pressed, processed */
   --gradient-fill-menu-focus: radial-gradient(circle farthest-side, var(--color-canvas), var(--color-tint)); /* пункт меню: hover, focus */
   --gradient-fill-menu-pressed: radial-gradient(ellipse farthest-side, var(--color-canvas), var(--color-tint)); /* пункт меню: pressed, processed */
   --gradient-fill-arrow-small-active: linear-gradient(90deg, rgb(252 241 234 / 0.2), rgb(64 37 16 / 0.2)); /* світла стрілка */
