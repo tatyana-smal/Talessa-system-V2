@@ -73,13 +73,20 @@ export function Header({ lang }: { lang: Lang }) {
             {link.label}
           </ButtonLink>
         ))}
-        <LanguageSwitcher lang={lang} label={t.language} />
-        <ThemeSwitch label={t.theme} />
+        <div className="nav__tools">
+          <LanguageSwitcher lang={lang} label={t.language} />
+          <ThemeSwitch label={t.theme} />
+        </div>
         <ButtonLink href={path(lang, "/contact")} size="lg" className="btn btn--pill nav__cta">
           {t.contact}
           <SendIcon />
         </ButtonLink>
       </nav>
+      {/* на телефоні перемикачі стоять у шапці поруч із бургером, а не в меню */}
+      <div className="header__tools">
+        <LanguageSwitcher lang={lang} label={t.language} />
+        <ThemeSwitch label={t.theme} />
+      </div>
       <button
         ref={burgerRef}
         type="button"

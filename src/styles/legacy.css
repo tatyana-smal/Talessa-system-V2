@@ -64,6 +64,8 @@
 .apps-block { display: contents; } /* heading + app cards form one layout on tablet */
 .apps__heading { display: none; }
 .burger { display: none; }
+.header__tools { display: none; }
+.nav__tools { display: contents; } /* на десктопі й планшеті перемикачі лишаються в рядку меню */
 
 /* ---------- Header ---------- */
 .header {
@@ -592,6 +594,8 @@
     cursor: pointer;
   }
   .nav { gap: 0; }
+  .nav__tools { display: none; }
+  .header__tools { display: flex; align-items: center; gap: var(--space-1); }
   .nav a:not(.btn) { display: none; }
   .nav .nav__cta { display: none; }
   .nav--open {
@@ -599,7 +603,7 @@
     z-index: 10;
     top: 100%;
     right: var(--space-1);
-    left: var(--space-1);
+    width: calc((100% - 2 * var(--space-1)) / 3); /* в 3 рази вужче за екран */
     flex-direction: column;
     align-items: stretch;
     padding: var(--space-1);
@@ -609,7 +613,7 @@
     box-shadow: 0 8px 24px rgba(64, 37, 16, 0.2);
   }
   .nav--open a:not(.btn) { display: block; }
-  .nav--open .nav__cta { display: inline-flex; justify-content: center; }
+  .nav--open .nav__cta { display: inline-flex; justify-content: center; height: auto; white-space: normal; text-align: center; }
 
   /* Mobile: one scalable image (780x1234) + text sized in cqw (1cqw = 1% of the 390px frame) */
   .hero { container-type: inline-size; margin-top: var(--space-3); }
