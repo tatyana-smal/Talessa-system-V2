@@ -29,6 +29,16 @@
   --color-ink: #402510; /* основний текст, заливка кнопок */
   --color-ink-muted: #6b5646; /* підписи, плейсхолдер, межі полів і карток (контраст ≥ 3:1) */
   --color-danger: #b00020; /* помилка: текст і межа поля (запропоновано) */
+  --color-tint: #e7d9ce; /* край градієнта пункту меню в станах focus і pressed (Figma: Color Text Button1) */
+
+  /* Заливки станів кнопок (Figma): градієнти лежать поверх кольору кнопки. Класи bg-fill-* нижче */
+  --gradient-fill-primary: linear-gradient(179deg, rgb(71 43 25 / 0.2) 3.55%, rgb(56 32 15 / 0.2) 96.9%); /* default */
+  --gradient-fill-primary-focus: linear-gradient(179deg, rgb(255 255 255 / 0.4) 3.55%, rgb(53 35 22 / 0.4) 96.9%); /* hover, focus */
+  --gradient-fill-primary-pressed: linear-gradient(179deg, rgb(153 148 146 / 0.4) 3.55%, rgb(53 35 22 / 0.4) 96.9%); /* pressed, processed */
+  --gradient-fill-secondary-active: linear-gradient(180deg, #f9f1ec, #a3978e); /* hover, focus, pressed, processed */
+  --gradient-fill-menu-focus: radial-gradient(circle farthest-side, var(--color-canvas), var(--color-tint)); /* пункт меню: hover, focus */
+  --gradient-fill-menu-pressed: radial-gradient(ellipse farthest-side, var(--color-canvas), var(--color-tint)); /* пункт меню: pressed, processed */
+  --gradient-fill-arrow-small-active: linear-gradient(90deg, rgb(252 241 234 / 0.2), rgb(64 37 16 / 0.2)); /* світла стрілка */
 
   /* Розміри тексту: розмір, висота рядка, трекінг, жирність */
   --text-caption: 14px;
@@ -68,6 +78,8 @@
   /* Тіні (з макета Figma). Колір тіні — ink із прозорістю, блік — canvas-білий */
   --shadow-button-primary: 0 3px 3px rgb(56 42 35 / 0.5), inset 0 6px 6px rgb(255 255 255 / 0.25); /* темна кнопка */
   --shadow-button-secondary: 0 3px 6px rgb(56 42 35 / 0.35), inset 0 3px 6px rgb(255 255 255 / 0.2); /* контурна кнопка */
+  --shadow-button-pressed: 8px 8px 8px rgb(25 19 16 / 0.5), inset 8px 8px 8px rgb(255 255 255 / 0.25); /* натиснута й «у процесі» (усі кнопки) */
+  --shadow-button-arrow-small: 0 3px 6px rgb(56 42 35 / 0.25), inset 0 3px 6px rgb(255 255 255 / 0.25); /* світла стрілка мобільної */
   --shadow-card: 0 6px 20px rgb(64 37 16 / 0.15); /* картка при наведенні */
   --shadow-box: 8px 8px 8px rgb(0 0 0 / 0.25); /* блоки «Вже реалізовано / Планується» */
 
@@ -89,6 +101,15 @@
   --aspect-hero-tablet: 1536 / 784;
   --aspect-hero-mobile: 780 / 1234;
 }
+
+/* Класи заливок станів кнопок: беруть градієнти з токенів вище */
+@utility bg-fill-primary { background-image: var(--gradient-fill-primary); }
+@utility bg-fill-primary-focus { background-image: var(--gradient-fill-primary-focus); }
+@utility bg-fill-primary-pressed { background-image: var(--gradient-fill-primary-pressed); }
+@utility bg-fill-secondary-active { background-image: var(--gradient-fill-secondary-active); }
+@utility bg-fill-menu-focus { background-image: var(--gradient-fill-menu-focus); }
+@utility bg-fill-menu-pressed { background-image: var(--gradient-fill-menu-pressed); }
+@utility bg-fill-arrow-small-active { background-image: var(--gradient-fill-arrow-small-active); }
 
 /* Планшет і менше (до 1100 px): великі розміри тексту меншають */
 @media (max-width: 1100px) {

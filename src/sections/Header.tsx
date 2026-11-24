@@ -69,9 +69,9 @@ export function Header({ lang }: { lang: Lang }) {
       </Link>
       <nav ref={navRef} className={`nav ${open ? "nav--open" : ""}`}>
         {links.map((link) => (
-          <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+          <ButtonLink key={link.href} href={link.href} variant="menu" onClick={() => setOpen(false)}>
             {link.label}
-          </Link>
+          </ButtonLink>
         ))}
         <LanguageSwitcher lang={lang} label={t.language} />
         <ThemeSwitch label={t.theme} />

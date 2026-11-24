@@ -40,6 +40,11 @@ import { Meta, ColorPalette, ColorItem, Typeset } from "@storybook/addon-docs/bl
     colors={{ "ink-muted": "var(--color-ink-muted)" }}
   />
   <ColorItem
+    title="tint"
+    subtitle="Край радіальної заливки пункту меню в станах focus і pressed"
+    colors={{ tint: "var(--color-tint)" }}
+  />
+  <ColorItem
     title="danger"
     subtitle="Помилка: текст і межа поля (значення запропоноване)"
     colors={{ danger: "var(--color-danger)" }}
@@ -80,7 +85,7 @@ import { Meta, ColorPalette, ColorItem, Typeset } from "@storybook/addon-docs/bl
 
 ## Тіні
 
-Тіні з макета Figma для обʼємних кнопок і карток: `shadow-button-primary` (темна кнопка), `shadow-button-secondary` (контурна), `shadow-card` (картка при наведенні), `shadow-box` (блоки на сторінках застосунків).
+Тіні з макета Figma для обʼємних кнопок і карток: `shadow-button-primary` (темна кнопка), `shadow-button-secondary` (контурна), `shadow-button-pressed` (натиснута кнопка і стан «у процесі»), `shadow-button-arrow-small` (світла стрілка мобільної), `shadow-card` (картка при наведенні), `shadow-box` (блоки на сторінках застосунків). Заливки станів кнопок: `bg-fill-primary`, `bg-fill-primary-focus`, `bg-fill-primary-pressed`, `bg-fill-secondary-active`, `bg-fill-menu-focus`, `bg-fill-menu-pressed`, `bg-fill-arrow-small-active`.
 
 <div className="flex gap-6 p-4">
   <div className="bg-ink text-canvas rounded-control px-4 py-2 text-body shadow-button-primary">button-primary</div>

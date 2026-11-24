@@ -132,7 +132,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       )}
 
       <div>
-        <Button type="submit" size="md" className="contact__submit" disabled={status === "sending"}>
+        <Button type="submit" size="md" className="contact__submit" loading={status === "sending"}>
           {status === "sending" ? t.sending : t.submit}
         </Button>
       </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LANG_COOKIE, hasLocale } from "@/i18n/config";
 import type { Lang } from "@/i18n/config";
+import { menuLook } from "./Button";
 
 const options: { code: Lang; label: string }[] = [
   { code: "uk", label: "UA" },
@@ -97,7 +98,7 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
               document.cookie = `${LANG_COOKIE}=${code}; path=/; max-age=31536000; samesite=lax`;
               setOpen(false);
             }}
-            className={`btn langsw__opt${hidden ? " langsw__opt--hidden" : ""} ${option}${size} text-ink hover:bg-surface`}
+            className={`btn langsw__opt${hidden ? " langsw__opt--hidden" : ""} ${option}${size} ${menuLook}`}
           >
             {text}
           </Link>
