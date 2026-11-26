@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
+import { Spinner } from "./ButtonContent";
 
 type Theme = "light" | "dark";
 const KEY = "talessa-theme";
@@ -35,13 +36,17 @@ function subscribe(listener: () => void) {
 export interface ThemeSwitchProps {
   /** Підпис перемикача для екранних читачів («Світла / темна тема»). */
   label: string;
+  /** Вимкнений перемикач (`aria-disabled`): лишається у фокусі, але тему не змінює. */
+  disabled?: boolean;
+  /** Стан «у процесі» (Processed у Figma): спінер замість іконки, `aria-busy`, тему не змінює. */
+  loading?: boolean;
 }
 
 /**
  * Перемикач світлої й темної теми. Поки він лише ставить `data-theme="light|dark"` на `<html>` і
  * запам'ятовує вибір; самі темні кольори додамо до токенів, коли буде готовий темний дизайн.
  */
-export function ThemeSwitch({ label }: ThemeSwitchProps) {
+export function ThemeSwitch({ label, disabled = false, loading = false }: ThemeSwitchProps) {
   const theme = useSyncExternalStore(subscribe, readTheme, () => "light" as Theme);
 
   useEffect(() => {
@@ -49,6 +54,7 @@ export function ThemeSwitch({ label }: ThemeSwitchProps) {
   }, [theme]);
 
   const dark = theme === "dark";
+  const blocked = disabled || loading;
   return (
     <button
       type="button"
@@ -56,15 +62,29 @@ export function ThemeSwitch({ label }: ThemeSwitchProps) {
       aria-checked={dark}
       aria-label={label}
       title={label}
-      onClick={() => writeTheme(dark ? "light" : "dark")}
-      className={`themesw${dark ? " themesw--dark" : ""} relative inline-flex h-11 w-17 cursor-pointer items-center rounded-full border border-line bg-canvas p-1 text-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
+      aria-disabled={disabled || undefined}
+      aria-busy={loading || undefined}
+      onClick={() => {
+        if (!blocked) writeTheme(dark ? "light" : "dark");
+      }}
+      className={`themesw${dark ? " themesw--dark" : ""} group relative inline-flex h-11 w-17 items-center rounded-full border border-line bg-canvas p-1 text-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
+        blocked ? "cursor-not-allowed" : "cursor-pointer"
+      }${disabled ? " opacity-50" : ""}`}
     >
       <span
         aria-hidden="true"
         className={`themesw__knob flex size-9 items-center justify-center rounded-full bg-ink shadow-button-primary transition-transform duration-300 motion-reduce:transition-none ${
           dark ? "translate-x-6" : ""
+        } ${
+          // Figma «Theme switch»: hover і focus світлішають ручку, натиснутий вигляд як default
+          blocked
+            ? ""
+            : "group-hover:bg-fill-primary-focus group-focus-visible:bg-fill-primary-focus group-active:bg-none"
         }`}
       >
+        {loading ? (
+          <Spinner small={false} />
+        ) : (
         <svg
           viewBox="0 0 24 24"
           className="size-5"
@@ -83,6 +103,7 @@ export function ThemeSwitch({ label }: ThemeSwitchProps) {
             </>
           )}
         </svg>
+        )}
       </span>
     </button>
   );

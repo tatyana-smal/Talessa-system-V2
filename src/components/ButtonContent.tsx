@@ -21,7 +21,7 @@ function ArrowIcon({ small }: { small: boolean }) {
 }
 
 /** Індикатор стану «у процесі» (progress_activity з макета): 24 px, у світлої стрілки 16 px. */
-function Spinner({ small }: { small: boolean }) {
+export function Spinner({ small }: { small: boolean }) {
   return (
     <svg
       aria-hidden="true"

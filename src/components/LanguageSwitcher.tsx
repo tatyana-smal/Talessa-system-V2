@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { LANG_COOKIE, hasLocale } from "@/i18n/config";
 import type { Lang } from "@/i18n/config";
 import { menuLook } from "./Button";
+import { Spinner } from "./ButtonContent";
 
 const options: { code: Lang; label: string }[] = [
   { code: "uk", label: "UA" },
@@ -17,6 +18,10 @@ export interface LanguageSwitcherProps {
   lang: Lang;
   /** Підпис групи для екранних читачів («Мова»). */
   label: string;
+  /** Вимкнений перемикач (`aria-disabled`): лишається у фокусі, але не розгортається. */
+  disabled?: boolean;
+  /** Стан «у процесі» (Processed у Figma): спінер замість назви мови, `aria-busy`, не розгортається. */
+  loading?: boolean;
 }
 
 /** Адреса тієї самої сторінки іншою мовою: `/uk/privacy` → `/en/privacy`. */
@@ -32,14 +37,25 @@ const option =
   "font-body text-body transition-all duration-300 motion-reduce:transition-none " +
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
+// Активна мова (Figma «Language switch»): hover і focus світлішають, натискання дає тінь усій пігулці
+const activeStates =
+  "cursor-pointer hover:bg-fill-primary-focus focus-visible:bg-fill-primary-focus active:bg-none";
+
 /**
  * Перемикач мови: пігулка показує поточну мову; натискання розгортає її й показує всі мови,
  * вибір іншої мови відкриває ту саму сторінку цією мовою. Закривається клавішею Escape
  * або натисканням поза пігулкою.
  */
-export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
+export function LanguageSwitcher({
+  lang,
+  label,
+  disabled = false,
+  loading = false,
+}: LanguageSwitcherProps) {
   const pathname = usePathname() ?? "/";
-  const [open, setOpen] = useState(false);
+  const [expanded, setOpen] = useState(false);
+  const blocked = disabled || loading;
+  const open = expanded && !blocked;
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,7 +79,9 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
       ref={ref}
       role="group"
       aria-label={label}
-      className="langsw inline-flex items-center gap-0.5 rounded-full border border-line bg-canvas p-1"
+      className={`langsw inline-flex items-center gap-0.5 rounded-full border border-line bg-canvas p-1${
+        open || blocked ? "" : " has-active:shadow-button-pressed"
+      }`}
     >
       {options.map(({ code, label: text }) => {
         const active = code === lang;
@@ -80,10 +98,23 @@ export function LanguageSwitcher({ lang, label }: LanguageSwitcherProps) {
               type="button"
               aria-pressed
               aria-expanded={open}
-              onClick={() => setOpen((value) => !value)}
-              className={`langsw__opt langsw__opt--active ${option}${size} bg-ink text-canvas shadow-button-primary cursor-pointer`}
+              aria-disabled={disabled || undefined}
+              aria-busy={loading || undefined}
+              onClick={() => {
+                if (!blocked) setOpen((value) => !value);
+              }}
+              className={`langsw__opt langsw__opt--active ${option}${size} bg-ink text-canvas shadow-button-primary ${
+                blocked ? "cursor-not-allowed" : activeStates
+              }${disabled ? " opacity-50" : ""}`}
             >
-              {text}
+              {loading ? (
+                <>
+                  <Spinner small={false} />
+                  <span className="sr-only">{text}</span>
+                </>
+              ) : (
+                text
+              )}
             </button>
           );
         }
